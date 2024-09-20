@@ -28,9 +28,10 @@ grep '^[^#]' /etc/passwd | grep -o '^[^:]*' | sort
 ```
 ## Решение:
 ```
+cat /etc/protocols | awk '{print $2, $1}' | sort -nr | head -n 5
 ```
 ## Результат:
-
+![image](https://github.com/user-attachments/assets/759e8200-76d2-4961-8fb3-ec9b8609041b)
 ## Задача 3
 
 Написать программу banner средствами bash для вывода текстов, как в следующем примере (размер баннера должен меняться!):
