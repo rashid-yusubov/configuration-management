@@ -46,10 +46,31 @@ cat /etc/protocols | awk '{print $2, $1}' | sort -nr | head -n 5
 
 ## Решение:
 ```
+#!/bin/bash
 
+# Проверка наличия аргумента
+if [ -z "$1" ]; then
+  echo "Usage: $0 \"Your message here\""
+  exit 1
+fi
+
+# Сообщение
+message="$1"
+
+# Длина сообщения
+length=${#message}
+
+# Верхняя граница
+echo "+$(printf '%0.s-' $(seq 1 $((length + 2))))+"
+
+# Сообщение с границами
+echo "| $message |"
+
+# Нижняя граница
+echo "+$(printf '%0.s-' $(seq 1 $((length + 2))))+"
 ```
 ## Результат:
-
+![image](https://github.com/user-attachments/assets/478301b4-d2ab-4397-8ebb-7963e3f3908e)
 ## Задача 4
 
 Написать программу для вывода всех идентификаторов (по правилам C/C++ или Java) в файле (без повторений).
