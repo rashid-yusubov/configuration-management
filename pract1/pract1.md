@@ -230,8 +230,10 @@ done
 ```
 ## Результат:
 Создание файлов дубликтов: file1.txt; file2.txt; file3.txt и создание уникальных файлов: file4.txt; file5.txt
+
 ![image](https://github.com/user-attachments/assets/0b5ded06-5a30-4f80-9066-ae16391b73bd)
 Поиск дубликатов:
+
 ![image](https://github.com/user-attachments/assets/92e3e5bf-5451-4264-b5d4-18ea2a0034c9)
 ## Задача 8
 
