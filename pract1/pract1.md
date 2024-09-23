@@ -206,10 +206,33 @@ check_comment "$filename" "$extension"
 
 ## Решение:
 ```
+#!/bin/bash
 
+# Проверка наличия аргумента
+if [ -z "$1" ]; then
+  echo "Использование: $0 директория"
+  exit 1
+fi
+
+# Заданный путь
+directory=$1
+
+# Проверка существования директории
+if [ ! -d "$directory" ]; then
+  echo "Ошибка: директория $directory не найдена."
+  exit 1
+fi
+
+# Нахождение файлов-дубликатов
+find "$directory" -type f -exec md5sum {} + | sort | uniq -w32 -dD | awk '{print $2}' | while read -r file; do
+  echo "Найден дубликат: $file"
+done
 ```
 ## Результат:
-
+Создание файлов дубликтов: file1.txt; file2.txt; file3.txt и создание уникальных файлов: file4.txt; file5.txt
+![image](https://github.com/user-attachments/assets/0b5ded06-5a30-4f80-9066-ae16391b73bd)
+Поиск дубликатов:
+![image](https://github.com/user-attachments/assets/92e3e5bf-5451-4264-b5d4-18ea2a0034c9)
 ## Задача 8
 
 Написать программу, которая находит все файлы в данном каталоге с расширением, указанным в качестве аргумента и архивирует все эти файлы в архив tar.
