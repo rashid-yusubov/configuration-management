@@ -198,8 +198,8 @@ check_comment() {
 check_comment "$filename" "$extension"
 ```
 ## Результат:
-![image](https://github.com/user-attachments/assets/37092817-de69-4955-a061-922d668b53ab)
 ![image](https://github.com/user-attachments/assets/e6c9741a-bbcd-4a26-be44-6d8bb8d65d29)
+![image](https://github.com/user-attachments/assets/37092817-de69-4955-a061-922d668b53ab)
 ## Задача 7
 
 Написать программу для нахождения файлов-дубликатов (имеющих 1 или более копий содержимого) по заданному пути (и подкаталогам).
