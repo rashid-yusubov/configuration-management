@@ -146,10 +146,60 @@ fi
 
 ## Решение:
 ```
+#!/bin/bash
 
+# Проверка наличия аргумента
+if [ -z "$1" ]; then
+  echo "Usage: $0 filename"
+  exit 1
+fi
+
+# Имя файла
+filename=$1
+
+# Проверка расширения файла
+extension="${filename##*.}"
+
+# Функция для проверки комментария в первой строке
+check_comment() {
+  local file=$1
+  local ext=$2
+  local first_line=$(head -n 1 "$file")
+
+  case "$ext" in
+    c)
+      if [[ "$first_line" =~ ^[[:space:]]*// ]]; then
+        echo "Файл $file содержит комментарий в первой строке."
+      else
+        echo "Файл $file не содержит комментарий в первой строке."
+      fi
+      ;;
+    js)
+      if [[ "$first_line" =~ ^[[:space:]]*// ]]; then
+        echo "Файл $file содержит комментарий в первой строке."
+      else
+        echo "Файл $file не содержит комментарий в первой строке."
+      fi
+      ;;
+    py)
+      if [[ "$first_line" =~ ^[[:space:]]*# ]]; then
+        echo "Файл $file содержит комментарий в первой строке."
+      else
+        echo "Файл $file не содержит комментарий в первой строке."
+      fi
+      ;;
+    *)
+      echo "Неподдерживаемое расширение файла: $ext"
+      ;;
+  esac
+}
+
+# Проверка файла
+check_comment "$filename" "$extension"
 ```
 ## Результат:
-
+![image](https://github.com/user-attachments/assets/37092817-de69-4955-a061-922d668b53ab)
+![image](https://github.com/user-attachments/assets/e6c9741a-bbcd-4a26-be44-6d8bb8d65d29)
 ## Задача 7
 
 Написать программу для нахождения файлов-дубликатов (имеющих 1 или более копий содержимого) по заданному пути (и подкаталогам).
