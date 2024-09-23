@@ -83,10 +83,17 @@ h hello include int main n printf return stdio void world
 
 ## Решение:
 ```
+#!/bin/bash
 
+file="$1"
+
+identifiers=$(grep -o -E '\b[a-zA-Z]*\b' "$file" | sort -u)
+
+echo "Идентификаторы:"
+echo "$identifiers"
 ```
 ## Результат:
-
+![image](https://github.com/user-attachments/assets/04ec63a0-1167-4dfd-8b18-61e610511882)
 ## Задача 5
 
 Написать программу для регистрации пользовательской команды (правильные права доступа и копирование в /usr/local/bin).
