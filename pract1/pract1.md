@@ -1,4 +1,4 @@
-# Практическое занятие №1. Введение, основы работы в командной строке
+![image](https://github.com/user-attachments/assets/d3ae2fe2-3fa0-4829-b645-88c7d8b1b99b)# Практическое занятие №1. Введение, основы работы в командной строке
 
 П.Н. Советов, РТУ МИРЭА
 
@@ -14,6 +14,7 @@ grep '^[^#]' /etc/passwd | grep -o '^[^:]*' | sort
 ```
 ## Результат:
 ![image](https://github.com/user-attachments/assets/129d3600-4499-407a-b773-3b488da5dff1)
+
 ## Задача 2
 
 Вывести данные /etc/protocols в отформатированном и отсортированном порядке для 5 наибольших портов, как показано в примере ниже:
@@ -32,6 +33,7 @@ cat /etc/protocols | awk '{print $2, $1}' | sort -nr | head -n 5
 ```
 ## Результат:
 ![image](https://github.com/user-attachments/assets/759e8200-76d2-4961-8fb3-ec9b8609041b)
+
 ## Задача 3
 
 Написать программу banner средствами bash для вывода текстов, как в следующем примере (размер баннера должен меняться!):
@@ -71,6 +73,7 @@ echo "+$(printf '%0.s-' $(seq 1 $((length + 2))))+"
 ```
 ## Результат:
 ![image](https://github.com/user-attachments/assets/478301b4-d2ab-4397-8ebb-7963e3f3908e)
+
 ## Задача 4
 
 Написать программу для вывода всех идентификаторов (по правилам C/C++ или Java) в файле (без повторений).
@@ -94,6 +97,7 @@ echo "$identifiers"
 ```
 ## Результат:
 ![image](https://github.com/user-attachments/assets/04ec63a0-1167-4dfd-8b18-61e610511882)
+
 ## Задача 5
 
 Написать программу для регистрации пользовательской команды (правильные права доступа и копирование в /usr/local/bin).
@@ -140,6 +144,7 @@ fi
 ```
 ## Результат:
 ![image](https://github.com/user-attachments/assets/a3f404ae-c695-4170-b4ac-d64f3331c016)
+
 ## Задача 6
 
 Написать программу для проверки наличия комментария в первой строке файлов с расширением c, js и py.
@@ -200,6 +205,7 @@ check_comment "$filename" "$extension"
 ## Результат:
 ![image](https://github.com/user-attachments/assets/e6c9741a-bbcd-4a26-be44-6d8bb8d65d29)
 ![image](https://github.com/user-attachments/assets/37092817-de69-4955-a061-922d668b53ab)
+
 ## Задача 7
 
 Написать программу для нахождения файлов-дубликатов (имеющих 1 или более копий содержимого) по заданному пути (и подкаталогам).
@@ -235,6 +241,7 @@ done
 Поиск дубликатов:
 
 ![image](https://github.com/user-attachments/assets/92e3e5bf-5451-4264-b5d4-18ea2a0034c9)
+
 ## Задача 8
 
 Написать программу, которая находит все файлы в данном каталоге с расширением, указанным в качестве аргумента и архивирует все эти файлы в архив tar.
@@ -272,6 +279,7 @@ fi
 ```
 ## Результат:
 ![image](https://github.com/user-attachments/assets/8be0042b-e9df-4586-91fb-3d1423fceef9)
+
 ## Задача 9
 
 Написать программу, которая заменяет в файле последовательности из 4 пробелов на символ табуляции. Входной и выходной файлы задаются аргументами.
@@ -298,6 +306,7 @@ echo "Замена завершена. Результат сохранен в $o
 ![image](https://github.com/user-attachments/assets/757fc869-8812-441a-9709-fd19096c095d)
 ![image](https://github.com/user-attachments/assets/70e1873e-745a-4efa-90bd-94aa553f84e9)
 ![image](https://github.com/user-attachments/assets/f2195288-b2a3-40c3-85fc-4e7f6595231a)
+
 ## Задача 10
 
 Написать программу, которая выводит названия всех пустых текстовых файлов в указанной директории. Директория передается в программу параметром.
@@ -307,6 +316,12 @@ echo "Замена завершена. Результат сохранен в $o
 
 ```
 ## Результат:
+Cоздание пустых файлов: file_1.txt; file_3.txt; file5.txt и создание заполненных файлов: file_2.txt; file_4.txt
+
+![image](https://github.com/user-attachments/assets/2d533930-bb76-4082-b1df-f49b63de947a)
+Поиск пустых файлов:
+
+![image](https://github.com/user-attachments/assets/95be6cd8-c6ab-4f82-9ede-6238857f1592)
 
 ## Полезные ссылки
 
@@ -323,6 +338,7 @@ https://nullprogram.com/blog/2020/08/01/
 https://habr.com/ru/post/150950/
 
 Стандарты
+
 
 https://www.gnu.org/prep/standards/standards.html#Command_002dLine-Interfaces
 https://www.gnu.org/software/libc/manual/html_node/Argument-Syntax.html
