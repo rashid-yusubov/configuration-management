@@ -313,7 +313,18 @@ echo "Замена завершена. Результат сохранен в $o
 
 ## Решение:
 ```
+#!/bin/bash
 
+# Проверка наличия одного аргумента
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 directory"
+    exit 1
+fi
+
+directory="$1"
+
+# Поиск и вывод названий всех пустых текстовых файлов
+find "$directory" -type f -name "*.txt" -empty
 ```
 ## Результат:
 Cоздание пустых файлов: file_1.txt; file_3.txt; file5.txt и создание заполненных файлов: file_2.txt; file_4.txt
