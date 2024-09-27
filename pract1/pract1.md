@@ -295,7 +295,9 @@ sed 's/    /\t/g' "$input_file" > "$output_file"
 echo "Замена завершена. Результат сохранен в $output_file"
 ```
 ## Результат:
+![image](https://github.com/user-attachments/assets/757fc869-8812-441a-9709-fd19096c095d)
 ![image](https://github.com/user-attachments/assets/70e1873e-745a-4efa-90bd-94aa553f84e9)
+![image](https://github.com/user-attachments/assets/f2195288-b2a3-40c3-85fc-4e7f6595231a)
 ## Задача 10
 
 Написать программу, которая выводит названия всех пустых текстовых файлов в указанной директории. Директория передается в программу параметром.
