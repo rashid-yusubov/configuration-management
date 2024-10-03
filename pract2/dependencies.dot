@@ -1,0 +1,22 @@
+digraph G {
+    // Узлы для matplotlib
+    "matplotlib" -> "numpy";
+    "matplotlib" -> "pyparsing";
+    "matplotlib" -> "cycler";
+    "matplotlib" -> "python-dateutil";
+    "matplotlib" -> "kiwisolver";
+
+    // Узлы для plotly.express
+    "plotly.express" -> "plotly";
+    "plotly" -> "pandas";
+    "plotly" -> "numpy";
+    "plotly" -> "six";
+    "plotly" -> "retrying";
+    "pandas" -> "python-dateutil";
+    "pandas" -> "numpy";
+    "pandas" -> "pytz";
+
+    // Общие зависимости
+    "numpy" [color=red];
+    "python-dateutil" [color=red];
+}
