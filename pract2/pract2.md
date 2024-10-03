@@ -176,14 +176,13 @@ solve satisfy;
 output ["Ticket: \(ticket)"];
 ```
 ## Результат:
-
+![image](https://github.com/user-attachments/assets/46d91178-7f15-46ec-9cec-40ba81e0fecc)
 
 ## Задача 5
 
 Решить на MiniZinc задачу о зависимостях пакетов для рисунка, приведенного ниже.
 
-![](images/pubgrub.png)
-
+![pubgrub](https://github.com/user-attachments/assets/b3213633-3201-402d-a059-5acbc23951a8)
 ## Решение:
 ```
 ```
