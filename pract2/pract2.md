@@ -111,7 +111,7 @@ Express -- это минималистичный и гибкий веб-фрей
 Сформировать graphviz-код и получить изображения зависимостей matplotlib и express.
 
 ## Решение:
-```bash
+```dot
 digraph G {
     // Узлы для matplotlib
     "matplotlib" -> "numpy";
@@ -119,7 +119,7 @@ digraph G {
     "matplotlib" -> "cycler";
     "matplotlib" -> "python-dateutil";
     "matplotlib" -> "kiwisolver";
-    "matplotlib" -> "Pillow"; // Дополнительная зависимость
+    "matplotlib" -> "Pillow";
 
     // Узлы для plotly.express
     "plotly.express" -> "plotly";
