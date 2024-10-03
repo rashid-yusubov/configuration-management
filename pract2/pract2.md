@@ -111,11 +111,33 @@ Express -- это минималистичный и гибкий веб-фрей
 Сформировать graphviz-код и получить изображения зависимостей matplotlib и express.
 
 ## Решение:
-```
+```bash
+digraph G {
+    // Узлы для matplotlib
+    "matplotlib" -> "numpy";
+    "matplotlib" -> "pyparsing";
+    "matplotlib" -> "cycler";
+    "matplotlib" -> "python-dateutil";
+    "matplotlib" -> "kiwisolver";
+    "matplotlib" -> "Pillow"; // Дополнительная зависимость
+
+    // Узлы для plotly.express
+    "plotly.express" -> "plotly";
+    "plotly" -> "pandas";
+    "plotly" -> "numpy";
+    "plotly" -> "six";
+    "plotly" -> "retrying";
+    "pandas" -> "python-dateutil";
+    "pandas" -> "numpy";
+    "pandas" -> "pytz";
+
+    // Общие зависимости
+    "numpy" [color=red];
+    "python-dateutil" [color=red];
+}
 ```
 ## Результат:
-
-
+![dependencies](https://github.com/user-attachments/assets/6f10938a-c069-4d02-bd79-9bbc3b41d782)
 ## Задача 4
 
 **Следующие задачи можно решать с помощью инструментов на выбор:**
