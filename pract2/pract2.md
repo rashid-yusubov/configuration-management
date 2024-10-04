@@ -205,11 +205,52 @@ target 2.0.0 и 1.0.0 не имеют зависимостей.
 ```
 
 ## Решение:
-```
+```MiniZinc
+% Определение пакетов и их версий
+enum Version = {v1_0_0, v1_1_0, v2_0_0};
+
+% Пакеты
+enum Package = {root, foo, left, right, shared, target};
+
+% Массив для хранения версий каждого пакета
+array[Package] of var Version: versions;
+
+% Зависимости
+% Зависимость вида: пакет A зависит от пакета B версии C
+% Функция valid_dependency(p, v) проверяет, что версия v пакета p находится в указанном диапазоне
+
+% root 1.0.0 зависит от foo ^1.0.0 и target ^2.0.0
+constraint versions[root] = v1_0_0;
+constraint (versions[foo] = v1_0_0 \/ versions[foo] = v1_1_0);
+constraint versions[target] = v2_0_0;
+
+% foo 1.1.0 зависит от left ^1.0.0 и right ^1.0.0
+constraint versions[foo] = v1_1_0 -> (versions[left] = v1_0_0 /\ versions[right] = v1_0_0);
+
+% foo 1.0.0 не имеет зависимостей
+% Это автоматически выполняется, так как нет дополнительных ограничений для foo 1.0.0
+
+% left 1.0.0 зависит от shared >=1.0.0
+constraint versions[left] = v1_0_0 -> (versions[shared] = v1_0_0 \/ versions[shared] = v2_0_0);
+
+% right 1.0.0 зависит от shared <2.0.0
+constraint versions[right] = v1_0_0 -> (versions[shared] = v1_0_0);
+
+% shared 2.0.0 не имеет зависимостей
+% shared 1.0.0 зависит от target ^1.0.0
+constraint versions[shared] = v1_0_0 -> (versions[target] = v1_0_0);
+
+% target 2.0.0 и 1.0.0 не имеют зависимостей
+% Эти ограничения включены в выбор версий
+
+solve satisfy;
+
+% Вывод результата
+output ["Versions:\n"] ++
+  [ show(versions[p]) ++ " " ++ show(p) ++ "\n" | p in Package];
 ```
 ## Результат:
-
-
+![image](https://github.com/user-attachments/assets/dda9ceeb-a142-4e97-9181-ed883e1ec50f)
 ## Задача 7
 
 Представить задачу о зависимостях пакетов в общей форме. Здесь необходимо действовать аналогично реальному менеджеру пакетов. То есть получить описание пакета, а также его зависимости в виде структуры данных. Например, в виде словаря. В предыдущих задачах зависимости были явно заданы в системе ограничений. Теперь же систему ограничений надо построить автоматически, по метаданным.
