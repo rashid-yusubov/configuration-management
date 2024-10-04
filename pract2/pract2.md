@@ -18,17 +18,17 @@ Matplotlib -- это библиотека для создания визуали
 
 1. **Имя пакета**: Matplotlib
 
-2. **Версия**: 3.9.2 (на момент последнего обновления)
+2. **Версия**: 3.9.2
 
-3. **Описание**: Библиотека для создания визуализаций в Python
+3. **Описание**: Пакет для построения графиков на Python
 
 4. **Домашняя страница**: [matplotlib.org](http://matplotlib.org)
 
 5. **Автор**: John D. Hunter, Michael Droettboom
 
-6. **Требуемые зависимости**: cycler, numpy, kiwisolver, python-dateutil, pyparsing
+6. **Автор-email**: Unknown <matplotlib-users@python.org>
 
-7. **Лицензия**: PSF (Python Software Foundation)
+7. **Лицензия**:License agreement for matplotlib versions 1.3.0 and later
 
 
 **Получение пакета без менеджера пакетов**
