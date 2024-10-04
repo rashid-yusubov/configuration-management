@@ -10,7 +10,7 @@
 
 ## Решение:
 Matplotlib -- это библиотека для создания визуализаций в Python. Основные элементы содержимого файла со служебной информацией:
-##**Служебная информация о пакете Matplotlib**
+## Служебная информация о пакете Matplotlib 
 
 ```pip show matplotlib```
 ![image](https://github.com/user-attachments/assets/a4f0a630-c78e-46e2-b7ec-0eca126116f9)
