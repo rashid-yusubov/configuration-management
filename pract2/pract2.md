@@ -163,33 +163,44 @@ Express -- это минималистичный и гибкий веб-фрей
 Сформировать graphviz-код и получить изображения зависимостей matplotlib и express.
 
 ## Решение:
+## График зависимостей matplotlib
 ```dot
 digraph G {
     // Узлы для matplotlib
-    "matplotlib" -> "numpy";
-    "matplotlib" -> "pyparsing";
     "matplotlib" -> "cycler";
-    "matplotlib" -> "python-dateutil";
+    "matplotlib" -> "fonttools";
     "matplotlib" -> "kiwisolver";
+    "matplotlib" -> "numpy";
+    "matplotlib" -> "packaging";
     "matplotlib" -> "Pillow";
+    "matplotlib" -> "pyparsing";
+    "matplotlib" -> "python-dateutil";
 
-    // Узлы для plotly.express
-    "plotly.express" -> "plotly";
-    "plotly" -> "pandas";
-    "plotly" -> "numpy";
-    "plotly" -> "six";
-    "plotly" -> "retrying";
-    "pandas" -> "python-dateutil";
-    "pandas" -> "numpy";
-    "pandas" -> "pytz";
-
-    // Общие зависимости
-    "numpy" [color=red];
-    "python-dateutil" [color=red];
+    "python-dateutil" -> "six";
 }
 ```
 ## Результат:
-![dependencies](https://github.com/user-attachments/assets/6f10938a-c069-4d02-bd79-9bbc3b41d782)
+![dependencies_matplotlib](https://github.com/user-attachments/assets/f5051299-8d15-489f-9a85-9d96c4ecd41b)
+## График зависимостей express
+```dot
+digraph G {
+    // Узлы для express
+    "express" -> "qs: 6.13.0";
+    "express" -> "depd: 2.0.0";
+    "express" -> "etag: ~1.8.1";
+    "express" -> "send: 0.19.0";
+    "express" -> "vary: ~1.1.2";
+    "express" -> "debug: 2.6.9";
+    "express" -> "fresh: 0.5.2";
+    "express" -> "cookie: 0.6.0";
+    "express" -> "accepts: ~1.3.8";
+    "express" -> "methods: ~1.1.2";
+    "express" -> "type-is: ~1.6.18";
+    "express" -> "parseurl: ~1.3.3";
+}
+```
+## Результат:
+![dependencies_express](https://github.com/user-attachments/assets/df7bddf9-7918-4bc9-81ac-ac4377fe5b4d)
 ## Задача 4
 
 **Следующие задачи можно решать с помощью инструментов на выбор:**
