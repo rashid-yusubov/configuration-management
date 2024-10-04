@@ -13,6 +13,7 @@ Matplotlib -- это библиотека для создания визуали
 ## Служебная информация о пакете Matplotlib 
 
 ```pip show matplotlib```
+
 ![image](https://github.com/user-attachments/assets/a4f0a630-c78e-46e2-b7ec-0eca126116f9)
 
 1. **Имя пакета**: Matplotlib
