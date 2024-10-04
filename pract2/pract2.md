@@ -256,11 +256,83 @@ output ["Versions:\n"] ++
 Представить задачу о зависимостях пакетов в общей форме. Здесь необходимо действовать аналогично реальному менеджеру пакетов. То есть получить описание пакета, а также его зависимости в виде структуры данных. Например, в виде словаря. В предыдущих задачах зависимости были явно заданы в системе ограничений. Теперь же систему ограничений надо построить автоматически, по метаданным.
 
 ## Решение:
-```
+```Python
+# Описание пакетов и их зависимостей
+packages = {
+    "root": {
+        "version": "1.0.0",
+        "dependencies": {
+            "foo": "^1.0.0",
+            "target": "^2.0.0"
+        }
+    },
+    "foo": {
+        "version": "1.1.0",
+        "dependencies": {
+            "left": "^1.0.0",
+            "right": "^1.0.0"
+        }
+    },
+    "left": {
+        "version": "1.0.0",
+        "dependencies": {
+            "shared": ">=1.0.0"
+        }
+    },
+    "right": {
+        "version": "1.0.0",
+        "dependencies": {
+            "shared": "<2.0.0"
+        }
+    },
+    "shared": {
+        "version": "2.0.0",
+        "dependencies": {}
+    },
+    "target": {
+        "version": "2.0.0",
+        "dependencies": {}
+    }
+}
+
+# Функция для получения зависимостей пакета
+def get_dependencies(package_name):
+    if package_name in packages:
+        return packages[package_name]["dependencies"]
+    else:
+        return None
+
+# Пример использования
+package_name = "foo"
+dependencies = get_dependencies(package_name)
+if dependencies:
+    print(f"Зависимости пакета {package_name}:")
+    for dep, version in dependencies.items():
+        print(f"  - {dep}: {version}")
+else:
+    print(f"Пакет {package_name} не найден.")
+constraints = []
+
+def add_constraints(package_name):
+    if package_name not in packages:
+        return
+
+    dependencies = packages[package_name]["dependencies"]
+    for dep, version in dependencies.items():
+        # Создаем ограничения на основе зависимостей
+        constraints.append(f"{package_name} -> {dep} {version}")
+        add_constraints(dep)  # Рекурсивно добавляем зависимости
+
+# Добавление ограничений для корневого пакета
+add_constraints("root")
+
+# Печать сгенерированных ограничений
+print("Сгенерированные ограничения:")
+for constraint in constraints:
+    print(constraint)
 ```
 ## Результат:
-
-
+![image](https://github.com/user-attachments/assets/7d933121-e364-4be1-99ac-16d5aa69a3d8)
 ## Полезные ссылки
 
 Semver: https://devhints.io/semver
