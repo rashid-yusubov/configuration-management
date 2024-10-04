@@ -13,6 +13,8 @@
 **Служебная информация о пакете Matplotlib**
 
 Matplotlib -- это библиотека для создания визуализаций в Python. Основные элементы содержимого файла со служебной информацией:
+```pip show matplotlib```
+![image](https://github.com/user-attachments/assets/a4f0a630-c78e-46e2-b7ec-0eca126116f9)
 
 1. **Имя пакета**: Matplotlib
 
