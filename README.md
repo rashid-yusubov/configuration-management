@@ -11,7 +11,7 @@
 
 **Список решенных самостоятельных работ:**
 
-- Самостоятельная работа №1 - [pract1.md](https://github.com/Rashid-Yusubov/Configuration-management/blob/f0fcea77860b705d4abc70223b344db29479e938/pract1/pract1.md)
+- Самостоятельная работа №1 - 
 
 - Самостоятельная работа №2 -
   
