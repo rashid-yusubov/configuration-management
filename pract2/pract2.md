@@ -61,19 +61,70 @@ Express -- это минималистичный и гибкий веб-фрей
 
 ![image](https://github.com/user-attachments/assets/e0cde92b-104c-4a97-8260-588bf9625116)
 
-#### Основные элементы содержимого файла со служебной информацией:
+# Пакет Express
 
-1. **name**: Имя пакета.
-2. **version**: Версия пакета.
-3. **description**: Краткое описание пакета.
-4. **main**: Указывает основной файл для модуля.
-5. **scripts**: Скрипты, которые можно выполнять через npm.
-6. **keywords**: Ключевые слова, связанные с пакетом, для поиска.
-7. **author**: Автор пакета.
-8. **license**: Лицензия, под которой распространяется пакет.
-9. **dependencies**: Зависимости пакета и их версии.
-10. **devDependencies**: Зависимости, используемые только в разработке.
-11. **repository**: Информация о репозитории, где размещен пакет.
+## Служебная информация о пакете
+
+- **Имя**: express
+- **Версия**: 4.21.0
+- **Лицензия**: MIT
+- **Зависимости**: 31
+- **Количество версий**: 279
+- **Описание**: Fast, unopinionated, minimalist web framework
+- **Ссылка на документацию**: [http://expressjs.com/](http://expressjs.com/)
+
+### Ключевые слова
+`express`, `framework`, `sinatra`, `web`, `http`, `rest`, `restful`, `router`, `app`, `api`
+
+### Дистрибутив
+- **tarball**: [https://registry.npmjs.org/express/-/express-4.21.0.tgz](https://registry.npmjs.org/express/-/express-4.21.0.tgz)
+- **shasum**: d57cb706d49623d4ac27833f1cbc466b668eb915
+- **integrity**: sha512-VqcNGcj/Id5ZT1LZ/cfihi3ttTn+NJmkli2eZADigjq29qTlWi/hAQ43t/VLPq8+UX06FCEx3ByOYet6ZFblng==
+- **unpackedSize**: 220.8 kB
+
+### Зависимости
+- `accepts`: ~1.3.8
+- `body-parser`: 1.20.3
+- `content-type`: ~1.0.4
+- `cookie`: 0.6.0
+- `debug`: 2.6.9
+- `dep`: 2.0.0
+- `encodeurl`: ~2.0.0
+- `escape-html`: ~1.0.3
+- `etag`: ~1.8.1
+- `finalhandler`: 1.3.1
+- `fresh`: 0.5.2
+- `http-errors`: 2.0.0
+- `methods`: ~1.1.2
+- `on-finished`: 2.4.1
+- `parseurl`: ~1.3.3
+- `proxy-addr`: ~2.0.7
+- `qs`: 6.13.0
+- `range-parser`: ~1.2.1
+- `safe-buffer`: 5.2.1
+- `send`: 0.19.0
+- `statuses`: 2.0.1
+- `type-is`: ~1.6.18
+- `utils-merge`: 1.0.1
+- `vary`: ~1.1.2
+
+### Поддержка
+**Управляющие**:
+- wesleytodd <wes@wesleytodd.com>
+- dougwilson <doug@somethingdoug.com>
+- linusu <linus@folkdatorn.se>
+- sheplu <jean.burellier@gmail.com>
+- blakeembrey <hello@blakeembrey.com>
+- ulisesgascon <ulisesgascondev@gmail.com>
+- mikeal <mikeal.rogers@gmail.com>
+
+### Дистрибутивные метки
+- **latest**: 4.21.0
+- **next**: 5.0.0
+
+### Дата публикации
+Опубликовано 3 недели назад автором wesleytodd <wes@wesleytodd.com>
+
 
 ## Получение пакета без менеджера пакетов
 
