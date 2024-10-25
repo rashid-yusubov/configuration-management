@@ -222,6 +222,7 @@ in studentsData
 ```
 import random
 
+
 def parse_bnf(text):
     '''
     Преобразовать текстовую запись БНФ в словарь.
@@ -232,6 +233,7 @@ def parse_bnf(text):
         grammar[name.strip()] = [alt.split() for alt in body.split('|')]
     return grammar
 
+
 def generate_phrase(grammar, start):
     '''
     Сгенерировать случайную фразу.
@@ -241,10 +243,9 @@ def generate_phrase(grammar, start):
         return ''.join([generate_phrase(grammar, name) for name in seq])
     return str(start)
 
+
 BNF = '''
-E = B B | B C
-B = 0 | 1
-C = 00 | 11 | 101
+E = 10 | 100 | 11 | 101101 | 000
 '''
 
 for i in range(10):
@@ -253,8 +254,7 @@ for i in range(10):
 
 ## Результат:
 
-![image](https://github.com/user-attachments/assets/aa0f3d34-c23c-40e1-80d9-acd653b8eff3)
-
+![image](https://github.com/user-attachments/assets/7a20573f-e193-4c14-a8fe-4b919c55a2b8)
 
 ## Задача 4
 
