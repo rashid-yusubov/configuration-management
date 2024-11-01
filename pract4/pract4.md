@@ -43,16 +43,16 @@ git checkout in
 ## Решение:
 ```
 git init
-git config user.name "rashid_yusubov"
-git config user.email "rashidyusubov@yandex.ru"
+git config user.name "coder1"
+git config user.email "coder1@example.com"
 echo print("Hello, from Rashid Yusubov!") > prog.py
 git add prog.py
-git commit -m "Мой первый коммит в prog.py"
+git commit -m "Add prog.py file with data"
 ```
 
 ## Результат:
 
-![image](https://github.com/user-attachments/assets/23fb45c8-11aa-4a4e-b9bf-58ac282443e4)
+![image](https://github.com/user-attachments/assets/c4a2de5b-ac3c-4de7-99d8-afc0956944d4)
 
 ## Задача 3
 
