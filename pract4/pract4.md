@@ -52,7 +52,7 @@ git commit -m "Add prog.py file with data"
 
 ## Результат:
 
-![image](https://github.com/user-attachments/assets/c4a2de5b-ac3c-4de7-99d8-afc0956944d4)
+![Снимок экрана 2024-11-01 142949](https://github.com/user-attachments/assets/6cc6fbdc-76c3-44bb-9370-25786e6f8da5)
 
 ## Задача 3
 
