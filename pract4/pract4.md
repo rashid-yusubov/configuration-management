@@ -42,10 +42,17 @@ git checkout in
 
 ## Решение:
 ```
-
+git init
+git config user.name "rashid_yusubov"
+git config user.email "rashidyusubov@yandex.ru"
+echo print("Hello, from Rashid Yusubov!") > prog.py
+git add prog.py
+git commit -m "Мой первый коммит в prog.py"
 ```
 
 ## Результат:
+
+![image](https://github.com/user-attachments/assets/23fb45c8-11aa-4a4e-b9bf-58ac282443e4)
 
 ## Задача 3
 
