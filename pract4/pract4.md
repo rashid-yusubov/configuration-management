@@ -72,6 +72,8 @@ D:\repository>git commit -m "first commit"
 D:\repository>
 ```
 
+![image](https://github.com/user-attachments/assets/a514fdd3-84ae-4850-95d4-3c896d10a0e0)
+
 ## Задача 3
 
 Создать рядом с локальным репозиторием bare-репозиторий с именем server. Загрузить туда содержимое локального репозитория. Команда git remote -v должна выдать информацию о server! Синхронизировать coder1 с server.
