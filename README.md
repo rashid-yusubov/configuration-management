@@ -11,6 +11,8 @@
 
 - Практическая работа №3 - [pract3.md](https://github.com/Rashid-Yusubov/Configuration-management/blob/2b8fe925ab17e3d1fda572e72f074cbb31b4c53e/pract3/pract3.md)
   
+- Практическая работа №4 - [pract3.md](в разработке)
+  
 **Список решенных самостоятельных работ:**
 
 - Самостоятельная работа №1 - 
