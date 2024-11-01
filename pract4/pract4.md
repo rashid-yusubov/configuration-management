@@ -52,7 +52,12 @@ git commit -m "first commit"
 
 ## Результат:
 
+![image](https://github.com/user-attachments/assets/a514fdd3-84ae-4850-95d4-3c896d10a0e0)
+
 ```
+Microsoft Windows [Version 10.0.22631.4317]
+(c) Корпорация Майкрософт (Microsoft Corporation). Все права защищены.
+
 D:\repository>git init
 Initialized empty Git repository in D:/repository/.git/
 
@@ -71,8 +76,6 @@ D:\repository>git commit -m "first commit"
 
 D:\repository>
 ```
-
-![image](https://github.com/user-attachments/assets/a514fdd3-84ae-4850-95d4-3c896d10a0e0)
 
 ## Задача 3
 
