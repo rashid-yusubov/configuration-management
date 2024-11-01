@@ -47,12 +47,30 @@ git config user.name "coder1"
 git config user.email "coder1@example.com"
 echo print("Hello, from Rashid Yusubov!") > prog.py
 git add prog.py
-git commit -m "Add prog.py file with data"
+git commit -m "first commit"
 ```
 
 ## Результат:
 
-![Снимок экрана 2024-11-01 142949](https://github.com/user-attachments/assets/6cc6fbdc-76c3-44bb-9370-25786e6f8da5)
+```
+D:\repository>git init
+Initialized empty Git repository in D:/repository/.git/
+
+D:\repository>git config user.name "coder1"
+
+D:\repository>git config user.email "coder1@example.com"
+
+D:\repository>echo print("Hello from Rashid Yusubov!") > prog.py
+
+D:\repository>git add prog.py
+
+D:\repository>git commit -m "first commit"
+[master (root-commit) 2270249] first commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 prog.py
+
+D:\repository>
+```
 
 ## Задача 3
 
