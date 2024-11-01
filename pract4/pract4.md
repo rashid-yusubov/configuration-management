@@ -34,7 +34,7 @@ git checkout in
 
 ## Результат:
 
-![image](https://github.com/user-attachments/assets/17fdf72a-7647-478f-9901-8827dd405e2b)
+![image](https://github.com/user-attachments/assets/3b830bfb-ad29-4d91-8b48-11b92740d72c)
 
 ## Задача 2
 
