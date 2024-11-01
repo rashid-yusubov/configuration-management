@@ -10,9 +10,41 @@
 
 ![image](https://github.com/user-attachments/assets/a30846f0-f7f9-4aaf-aa22-6e7bd336ff2e)
 
+## Решение:
+```
+git commit
+git tag in
+git branch first
+git branch second
+git commit
+git commit
+git checkout first
+git commit
+git commit
+git checkout master
+git merge first
+git checkout second
+git commit
+git commit
+git rebase master
+git checkout master
+git merge second
+git checkout in
+```
+
+## Результат:
+
+
 ## Задача 2
 
 Создать локальный git-репозиторий. Задать свои имя и почту (далее – coder1). Разместить файл prog.py с какими-нибудь данными. Прислать в текстовом виде диалог с git.
+
+## Решение:
+```
+
+```
+
+## Результат:
 
 ## Задача 3
 
@@ -61,9 +93,23 @@ Coder2 добавляет в readme в раздел об авторах свою
       first commit
 ```
 
+## Решение:
+```
+
+```
+
+## Результат:
+
 ## Задача 4
 
 Написать программу на Питоне (или другом ЯП), которая выводит список содержимого всех объектов репозитория. Воспользоваться командой "git cat-file -p". Идеальное решение – не использовать иных сторонних команд и библиотек для работы с git.
+
+## Решение:
+```
+
+```
+
+## Результат:
 
 ## Полезные ссылки
 
