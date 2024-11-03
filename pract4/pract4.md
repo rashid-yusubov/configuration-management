@@ -52,7 +52,7 @@ git commit -m "first commit"
 
 ## Результат:
 
-![image](https://github.com/user-attachments/assets/a514fdd3-84ae-4850-95d4-3c896d10a0e0)
+![image](https://github.com/user-attachments/assets/e118bacc-90e7-47cc-b911-f637cb581a11)
 
 ```
 Microsoft Windows [Version 10.0.22631.4317]
@@ -65,14 +65,21 @@ D:\repository>git config user.name "coder1"
 
 D:\repository>git config user.email "coder1@example.com"
 
-D:\repository>echo print("Hello from Rashid Yusubov!") > prog.py
+D:\repository>echo print("Hello, from Rashid Yusubov!") > prog.py
 
 D:\repository>git add prog.py
 
 D:\repository>git commit -m "first commit"
-[master (root-commit) 2270249] first commit
+[master (root-commit) 34333f9] first commit
  1 file changed, 1 insertion(+)
  create mode 100644 prog.py
+
+D:\repository>git log
+commit 34333f9605b012ce9e8ec4da5660e9b770c7727d (HEAD -> master)
+Author: coder1 <coder1@example.com>
+Date:   Sun Nov 3 17:30:04 2024 +0300
+
+    first commit
 
 D:\repository>
 ```
