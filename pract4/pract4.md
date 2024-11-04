@@ -194,7 +194,7 @@ git log -n 5 --graph --decorate --all
 
 ## Результат:
 
-![image](https://github.com/user-attachments/assets/6410560b-5f35-49f9-a28d-d22363a4f2bb)
+![image](https://github.com/user-attachments/assets/f2e7371c-f6d6-4846-bea1-6014e790b1a7)
 
 ```
 D:\repository\server>git log -n 5 --graph --decorate --all
