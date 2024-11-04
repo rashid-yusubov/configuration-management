@@ -186,8 +186,57 @@ def factorial(n):
 
 ## Решение:
 
+### Задача 1 (выражение `x * 10 + 42`):
+```java
+import java.util.Scanner;
+
+public class Task1 {
+    public static int calculate(int x) {
+        return x * 10 + 42;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите число x: ");
+        int x = scanner.nextInt();
+
+        int result = calculate(x);
+        System.out.println("Результат: " + result);
+    }
+}
 ```
+
+![image](https://github.com/user-attachments/assets/5fda1a11-2d54-4b47-a83c-ae1ed7ab9ffa)
+
+### Задача 2 (факториал):
+
+```java
+import java.util.Scanner;
+
+public class Task2 {
+    public static int factorial(int n) {
+        int r = 1;
+        while (n > 1) {
+            r *= n;
+            n -= 1;
+        }
+        return r;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите число для вычисления факториала: ");
+        int n = scanner.nextInt();
+
+        int result = factorial(n);
+        System.out.println("Факториал: " + result);
+    }
+}
 ```
+
+![image](https://github.com/user-attachments/assets/9cb3bc6e-9d64-4467-9698-779d1fcfaacd)
 
 ## Результат:
 
