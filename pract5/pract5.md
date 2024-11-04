@@ -9,7 +9,7 @@
 
 Изучите возможности просмотра байткода ВМ CPython.
 
-```
+```Python
 import dis
 
 def foo(x):
