@@ -29,7 +29,7 @@
 
 ## Результат:
 
-<center>![image](https://github.com/user-attachments/assets/dfba45f5-ef35-4091-9e3c-109ef22e6bc2)</center>
+![image](https://github.com/user-attachments/assets/dfba45f5-ef35-4091-9e3c-109ef22e6bc2)
 
 
 ## Задача 2
