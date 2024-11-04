@@ -239,7 +239,7 @@ D:\repository\server>
 
 ## Решение:
 
-```
+```python
 import subprocess
 
 
