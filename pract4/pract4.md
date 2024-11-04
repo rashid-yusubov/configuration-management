@@ -45,14 +45,14 @@ git checkout in
 git init
 git config user.name "coder1"
 git config user.email "coder1@example.com"
-echo print("Hello, from Rashid Yusubov!") > prog.py
+echo print("Hello, World!") > prog.py
 git add prog.py
 git commit -m "first commit"
 ```
 
 ## Результат:
 
-![image](https://github.com/user-attachments/assets/e118bacc-90e7-47cc-b911-f637cb581a11)
+![image](https://github.com/user-attachments/assets/50b9da51-b4f5-4415-a81f-8a8f7634df73)
 
 ```
 Microsoft Windows [Version 10.0.22631.4317]
@@ -65,19 +65,23 @@ D:\repository>git config user.name "coder1"
 
 D:\repository>git config user.email "coder1@example.com"
 
-D:\repository>echo print("Hello, from Rashid Yusubov!") > prog.py
+D:\repository>echo print("Hello, World!") > prog.py
 
 D:\repository>git add prog.py
 
 D:\repository>git commit -m "first commit"
-[master (root-commit) 34333f9] first commit
+[master (root-commit) ac451ff] first commit
  1 file changed, 1 insertion(+)
  create mode 100644 prog.py
 
+D:\repository>git status
+On branch master
+nothing to commit, working tree clean
+
 D:\repository>git log
-commit 34333f9605b012ce9e8ec4da5660e9b770c7727d (HEAD -> master)
+commit ac451ff5ac0ed504be56e6d2d4b743bb7977b46d (HEAD -> master)
 Author: coder1 <coder1@example.com>
-Date:   Sun Nov 3 17:30:04 2024 +0300
+Date:   Mon Nov 4 03:59:01 2024 +0300
 
     first commit
 
