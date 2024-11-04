@@ -126,6 +126,8 @@ for i in range(10):
 
 ## Решение:
 
+![image](https://github.com/user-attachments/assets/ea64e5fe-b508-4999-ae3a-68a123130a0a)
+
 ```Dhall
 let Group = List Text
 let Student = { age : Natural, group : Text, name : Text }
