@@ -56,7 +56,7 @@ git commit -m "first commit"
 
 ![image](https://github.com/user-attachments/assets/50b9da51-b4f5-4415-a81f-8a8f7634df73)
 
-```
+```bash
 Microsoft Windows [Version 10.0.22631.4317]
 (c) Корпорация Майкрософт (Microsoft Corporation). Все права защищены.
 
