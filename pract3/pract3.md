@@ -152,7 +152,7 @@ in studentsData
 
 ## Результат:
 
-```
+```JSON
 {
   "groups": [
     "ИКБО-1-20",
@@ -220,7 +220,7 @@ in studentsData
 
 ## Решение:
 
-```
+```Python
 import random
 
 
@@ -270,7 +270,7 @@ for i in range(10):
 ```
 
 ## Решение:
-```
+```Python
 import random
 
 
@@ -321,7 +321,7 @@ y & ~(y)
 ```
 
 ## Решение:
-```
+```Python
 import random
 
 
