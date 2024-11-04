@@ -207,7 +207,20 @@ public class Task1 {
 }
 ```
 
-![image](https://github.com/user-attachments/assets/4e9592fe-e63b-43b2-a87d-5264d50a6736)
+### Байткод JVM для функции `calculate`
+
+Байткод JVM для этой функции можно сгенерировать с помощью команды `javap -c Task1`. Результат будет примерно следующим:
+
+```
+public static int calculate(int);
+  Code:
+     0: iload_0           // Загружаем x в стек
+     1: bipush 10         // Загружаем константу 10 в стек
+     3: imul              // Умножаем x на 10
+     4: bipush 42         // Загружаем константу 42 в стек
+     6: iadd              // Складываем результат умножения с 42
+     7: ireturn           // Возвращаем итоговое значение
+```
 
 ### Задача 2 (факториал):
 
@@ -236,10 +249,36 @@ public class Task2 {
 }
 ```
 
-![image](https://github.com/user-attachments/assets/4c876663-9039-42d3-8aa6-f02bab8fbb20)
+### Байткод JVM для функции `factorial`
+
+Для просмотра байткода функции `factorial` можно снова использовать команду `javap -c Task2`. Результат будет примерно следующим:
+
+```
+public static int factorial(int);
+  Code:
+     0: iconst_1              // Инициализируем r = 1
+     1: istore_1              // Сохраняем значение 1 в переменную r
+     2: iload_0               // Загружаем значение n в стек
+     3: iconst_1              // Загружаем константу 1 в стек
+     4: if_icmple 22          // Проверяем, n > 1; если нет, переходим к завершению
+     7: iload_1               // Загружаем r в стек
+     8: iload_0               // Загружаем n в стек
+     9: imul                  // Умножаем r на n
+    10: istore_1              // Сохраняем результат в r
+    11: iload_0               // Загружаем n в стек
+    12: iconst_1              // Загружаем 1 в стек
+    13: isub                  // Вычитаем 1 из n
+    14: istore_0              // Сохраняем результат в n
+    15: goto 2                // Переход к началу цикла
+    22: iload_1               // Загружаем r в стек (итоговый результат)
+    23: ireturn               // Возвращаем r
+```
 
 ## Результат:
 
+![image](https://github.com/user-attachments/assets/4e9592fe-e63b-43b2-a87d-5264d50a6736)
+
+![image](https://github.com/user-attachments/assets/4c876663-9039-42d3-8aa6-f02bab8fbb20)
 
 ## Задача 4
 
