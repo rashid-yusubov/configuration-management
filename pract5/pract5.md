@@ -207,7 +207,7 @@ public class Task1 {
 }
 ```
 
-![image](https://github.com/user-attachments/assets/5fda1a11-2d54-4b47-a83c-ae1ed7ab9ffa)
+![image](https://github.com/user-attachments/assets/4e9592fe-e63b-43b2-a87d-5264d50a6736)
 
 ### Задача 2 (факториал):
 
