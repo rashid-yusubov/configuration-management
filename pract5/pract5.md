@@ -236,7 +236,7 @@ public class Task2 {
 }
 ```
 
-![image](https://github.com/user-attachments/assets/9cb3bc6e-9d64-4467-9698-779d1fcfaacd)
+![image](https://github.com/user-attachments/assets/4c876663-9039-42d3-8aa6-f02bab8fbb20)
 
 ## Результат:
 
