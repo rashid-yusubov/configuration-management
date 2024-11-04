@@ -291,11 +291,19 @@ public static int factorial(int);
 
 ## Решение:
 
-```
+```Bash
+qemu-img create -f qcow2 alpine_disk.qcow2 500M
+qemu-system-x86_64 -m 512 -nic user -boot d -cdrom alpine-virt-3.20.3-x86_64.iso -hda alpine_disk.qcow2 -display gtk
+setup-alpine
+qemu-system-x86_64 -m 512 -nic user -hda alpine_disk.qcow2
+apk add nano
+nano /etc/motd
+reboot
 ```
 
 ## Результат:
 
+![image](https://github.com/user-attachments/assets/b144b8f9-ea75-4266-9e23-ce90e6204dc8)
 
 ## Задача 5
 
