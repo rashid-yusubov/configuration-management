@@ -41,6 +41,7 @@ git checkout in
 Создать локальный git-репозиторий. Задать свои имя и почту (далее – coder1). Разместить файл prog.py с какими-нибудь данными. Прислать в текстовом виде диалог с git.
 
 ## Решение:
+
 ```
 git init
 git config user.name "coder1"
@@ -136,13 +137,100 @@ Coder2 добавляет в readme в раздел об авторах свою
 ```
 
 ## Решение:
-```
 
+```
+git init
+git config user.name "coder1"
+git config user.email "coder1@example.com"
+echo print("Hello, World!") > prog.py
+git add prog.py
+git commit -m "first commit"
+
+cd D:\repository
+git init --bare server
+
+git remote add server D:\repository\server
+git remote -v
+
+git push server master
+
+git clone D:\repository\server D:\repository\client
+cd D:\repository\client
+git config user.name "coder2"
+git config user.email "coder2@example.com"
+
+echo "Author Information:" > readme.md
+git add readme.md
+git commit -m "docs"
+
+git remote rename origin server
+
+git push server master
+
+cd D:\repository
+git pull server master
+
+echo "Author: coder1" >> readme.md
+git add readme.md
+git commit -m "coder1 info"
+git push server master
+
+cd D:\repository\client
+echo "Author: coder2" >> readme.md
+git add readme.md
+git commit -m "coder2 info"
+git push server master
+
+git pull server master
+
+git add readme.md
+git commit -m "readme fix"
+git push server master
+
+cd ..
+cd server
+git log -n 5 --graph --decorate --all
 ```
 
 ## Результат:
 
-![image](https://github.com/user-attachments/assets/0eedb1ad-bfd6-4631-bbba-fe0b1da0fc07)
+![image](https://github.com/user-attachments/assets/6410560b-5f35-49f9-a28d-d22363a4f2bb)
+
+```
+D:\repository\server>git log -n 5 --graph --decorate --all
+*   commit 73a4759924d3c8f2ab582bd8f29a9e8b1fea1a78 (HEAD -> master)
+|\  Merge: 8ebc7c1 b5f90b0
+| | Author: coder2 <coder2@example.com>
+| | Date:   Mon Nov 4 04:07:50 2024 +0300
+| |
+| |     readme fix
+| |
+| * commit b5f90b095e4917283fe8b96817ee606d812ff24a
+| | Author: coder1 <coder1@example.com>
+| | Date:   Mon Nov 4 04:06:06 2024 +0300
+| |
+| |     coder1 info
+| |
+* | commit 8ebc7c186983e9a5504a3e1bae035bd994fba577
+|/  Author: coder2 <coder2@example.com>
+|   Date:   Mon Nov 4 04:06:33 2024 +0300
+|
+|       coder2 info
+|
+* commit 0b8d1714592eac8dcb8bd4b165aa43fe58741c04
+| Author: coder2 <coder2@example.com>
+| Date:   Mon Nov 4 04:03:46 2024 +0300
+|
+|     docs
+|
+* commit ac451ff5ac0ed504be56e6d2d4b743bb7977b46d
+  Author: coder1 <coder1@example.com>
+  Date:   Mon Nov 4 03:59:01 2024 +0300
+
+      first commit
+
+D:\repository\server>
+```
 
 ## Задача 4
 
