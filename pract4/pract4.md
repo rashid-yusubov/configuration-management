@@ -237,11 +237,38 @@ D:\repository\server>
 Написать программу на Питоне (или другом ЯП), которая выводит список содержимого всех объектов репозитория. Воспользоваться командой "git cat-file -p". Идеальное решение – не использовать иных сторонних команд и библиотек для работы с git.
 
 ## Решение:
-```
 
+```
+import subprocess
+
+
+def get_git_objects():
+    # Получаем список всех объектов в репозитории
+    try:
+        # Выполняем команду 'git rev-list --all' для получения всех хешей коммитов
+        commits = subprocess.check_output(['git', 'rev-list', '--all']).decode('utf-8').splitlines()
+
+        # Для каждого коммита получаем содержимое объекта
+        for commit in commits:
+            print(f'Contents of commit {commit}:')
+            try:
+                # Используем 'git cat-file -p' для получения содержимого
+                content = subprocess.check_output(['git', 'cat-file', '-p', commit]).decode('utf-8')
+                print(content)
+            except subprocess.CalledProcessError as e:
+                print(f'Error retrieving object {commit}: {e}')
+            print('-' * 40)
+    except subprocess.CalledProcessError as e:
+        print(f'Error retrieving commits: {e}')
+
+
+if __name__ == '__main__':
+    get_git_objects()
 ```
 
 ## Результат:
+
+![image](https://github.com/user-attachments/assets/21287f60-70b6-4672-8118-5e17b039a7ec)
 
 ## Полезные ссылки
 
