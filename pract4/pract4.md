@@ -197,7 +197,7 @@ git log -n 5 --graph --decorate --all
 
 ![image](https://github.com/user-attachments/assets/f2e7371c-f6d6-4846-bea1-6014e790b1a7)
 
-```bash
+```C
 D:\repository\server>git log -n 5 --graph --decorate --all
 *   commit 73a4759924d3c8f2ab582bd8f29a9e8b1fea1a78 (HEAD -> master)
 |\  Merge: 8ebc7c1 b5f90b0
