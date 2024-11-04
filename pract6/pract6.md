@@ -65,10 +65,73 @@ mathematics
 
 ## Решение:
 
-```
+```Python
+import json
+from collections import defaultdict, deque
+
+
+def load_dependencies(filename):
+    with open(filename, 'r') as file:
+        data = json.load(file)
+    return data
+
+
+def build_graph(dependencies):
+    graph = defaultdict(list)
+    # Сначала добавляем все узлы в граф и их зависимости
+    for item, deps in dependencies.items():
+        graph[item]  # Гарантируем, что каждый элемент есть в графе
+        for dep in deps:
+            graph[dep]  # Также добавляем зависимость как узел
+            graph[dep].append(item)
+    return graph
+
+
+def topological_sort(graph):
+    in_degree = {node: 0 for node in graph}  # Инициализируем in_degree для всех узлов
+    for deps in graph.values():
+        for dep in deps:
+            in_degree[dep] += 1
+
+    queue = deque([node for node in in_degree if in_degree[node] == 0])
+    sorted_items = []
+
+    while queue:
+        node = queue.popleft()
+        sorted_items.append(node)
+        for neighbor in graph[node]:
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
+                queue.append(neighbor)
+
+    return sorted_items
+
+
+def main(target):
+    dependencies = load_dependencies('civgraph.json')
+    graph = build_graph(dependencies)
+
+    # Добавляем цель как узел, если у нее есть зависимости
+    if target in dependencies:
+        graph[target]  # Убедимся, что цель есть в графе
+
+    sorted_items = topological_sort(graph)
+
+    # Находим индекс цели и выводим все элементы перед ней
+    if target in sorted_items:
+        index = sorted_items.index(target)
+        for item in sorted_items[:index + 1]:
+            print(item)
+
+
+if __name__ == "__main__":
+    target = "mathematics"  # Здесь можно указать любую цель
+    main(target)
 ```
 
 ## Результат:
+
+![image](https://github.com/user-attachments/assets/87d7e59f-4a97-4ed9-89e0-6e9366b3d289)
 
 ## Задача 2
 
