@@ -12,7 +12,7 @@
 ![image](https://github.com/user-attachments/assets/a30846f0-f7f9-4aaf-aa22-6e7bd336ff2e)
 
 ## Решение:
-```
+```bash
 git commit
 git tag in
 git branch first
