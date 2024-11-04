@@ -43,7 +43,7 @@ git checkout in
 
 ## Решение:
 
-```
+```bash
 git init
 git config user.name "coder1"
 git config user.email "coder1@example.com"
