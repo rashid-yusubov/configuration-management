@@ -126,7 +126,7 @@ for i in range(10):
 
 ## Решение:
 
-```
+```Dhall
 -- Файл: students.dhall
 
 let Group = List Text
