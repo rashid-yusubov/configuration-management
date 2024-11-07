@@ -93,7 +93,7 @@ deactivate P
 
 ## Решение
 
-```noweb
+```LaTeX
 \documentclass{report}
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
@@ -146,7 +146,7 @@ mergeSort xs = merge (mergeSort left) (mergeSort right)
 \end{document}
 ```
 
-```
+```bash
 noweb -Llatex merge_sort.nw
 pdflatex merge_sort.tex
 ```
