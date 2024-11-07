@@ -46,10 +46,45 @@
 
 ## Решение
 
-```
+```PlantUML
+@startuml
+actor "Студент Юсубов Р.Х." as S
+database Piazza as P
+actor Преподаватель as T
+
+T -> P : Публикация задачи
+activate P
+P --> T : Задача опубликована
+deactivate P
+
+S -> P : Поиск задач
+activate P
+P --> S : Получение задачи
+deactivate P
+
+S -> P : Публикация решения
+activate P
+P --> S : Решение опубликовано
+deactivate P
+
+T -> P : Поиск решений
+activate P
+P --> T : Решение найдено
+T -> P : Публикация оценки
+P --> T : Оценка опубликована
+deactivate P
+
+S -> P : Проверка оценки
+activate P
+P --> S : Оценка получена
+deactivate P
+
+@enduml
 ```
 
 ## Результат
+
+![plantuml](https://github.com/user-attachments/assets/365884d4-1d08-46d3-99a0-1006e9afa244)
 
 ## Задача 3
 
