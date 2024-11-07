@@ -13,10 +13,27 @@
 
 ## Решение
 
-```
+```LaTeX
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage[T2A]{fontenc}
+\begin{document}
+
+
+\[
+\int_{x}^{\infty} \frac{dt}{t(t^2 - 1) \log t} = \int_{x}^{\infty} \frac{1}{t \log t} \left( \sum_{m=1}^{\infty} t^{-2m} \right) dt = \sum_{m=1}^{\infty} \int_{x}^{\infty} \frac{t^{-2m}}{t \log t} dt = \sum_{m=1}^{\infty} \operatorname{li}(x^{-2m})
+\]
+
+Юсубов Рашид Хазеинович
+
+\end{document}
 ```
 
 ## Результат
+
+![image](https://github.com/user-attachments/assets/844e772b-016a-4560-9e1c-7c6074c40ea4)
 
 ## Задача 2
 
