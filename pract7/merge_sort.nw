@@ -44,7 +44,7 @@ mergeSort xs = merge (mergeSort left) (mergeSort right)
 \end{lstlisting}
 
 \section{Заключение}
-
+\footnote{Разработал Юсубов Р.Х.} 
 Алгоритм сортировки слиянием эффективно сортирует элементы, рекурсивно деля их и объединяя.
 
 \end{document}
