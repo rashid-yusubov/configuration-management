@@ -299,10 +299,39 @@ dir /B > files.lst
 
 ## Решение:
 
-```
+```Makefile
+# Компилятор GCC
+CC = gcc
+
+# Флаги компиляции для создания исполняемого файла "prog"
+CFLAGS = -o prog
+
+# Исходные файлы
+SRC = prog.c data.c
+
+# Основная цель, которая включает компиляцию и архивирование
+all: prog archive
+
+# Цель для компиляции исходных файлов в исполняемый файл
+prog: $(SRC)
+    $(CC) $(SRC) $(CFLAGS)
+
+# Цель для создания файла со списком всех файлов в текущем каталоге
+files.lst:
+    dir /B > files.lst
+
+# Цель для архивирования всех файлов в текущем каталоге
+archive: files.lst
+    7z a distr.zip *.*
+
+# Цель для очистки проекта от созданных файлов
+clean:
+    del prog.exe files.lst distr.zip
 ```
 
 ## Результат:
+
+![image](https://github.com/user-attachments/assets/b6ddd7bc-5b4d-442d-a573-1d589966d340)
 
 ## Полезные ссылки
 
