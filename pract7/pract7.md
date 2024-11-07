@@ -157,7 +157,7 @@ pdflatex merge_sort.tex
 
 2) PDF-файл: [merge_sort.pdf](merge_sort.pdf)
 
-3) Исходным код: [merge_sort.tex](merge_sort.tex)
+3) Исходный код: [merge_sort.tex](merge_sort.tex)
 
 ## Дополнительное задание:
 
