@@ -44,7 +44,7 @@ mergeSort xs = merge (mergeSort left) (mergeSort right)
   where
     (left, right) = splitAt (length xs `div` 2) xs
 \end{lstlisting}
-
+\footnote{Разработал Юсубов Р.Х.} 
 \section{Заключение}
 
 Алгоритм сортировки слиянием эффективно сортирует элементы, рекурсивно деля их и объединяя.
