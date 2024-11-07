@@ -114,64 +114,77 @@ if __name__ == "__main__":
 
 ```Python
 import json
+import os
+
+# Файл для сохранения завершенных задач
+TASKS_FILE = "tasks.txt"
 
 
-def load_dependencies(filename):
-    """Загрузить граф зависимостей из файла JSON."""
-    with open(filename, 'r') as file:
-        return json.load(file)
+# Загрузка списка завершенных задач из файла
+def load_tasks():
+    if os.path.exists(TASKS_FILE):
+        with open(TASKS_FILE, 'r') as f:
+            return set(f.read().splitlines())
+    return set()
 
 
-def topological_sort(graph):
-    """Проводим топологическую сортировку графа зависимостей."""
-    visited = set()
-    order = []
+# Сохранение завершенных задач в файл
+def save_tasks(tasks):
+    with open(TASKS_FILE, 'w') as f:
+        f.write('\n'.join(tasks))
 
-    def dfs(node):
-        if node in visited:
+
+# Загрузка графа зависимостей из JSON-файла
+def load_dependency_graph(filename):
+    try:
+        with open(filename, 'r') as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"Ошибка при загрузке файла {filename}: {e}")
+        return {}
+
+
+# Функция генерации Makefile с проверкой на уже выполненные задачи
+def generate_makefile(dependency_graph, target_task):
+    visited_tasks = set()
+    tasks_to_process = []
+    completed_tasks = load_tasks()
+
+    def process_task(task):
+        if task in visited_tasks or task in completed_tasks:
             return
-        visited.add(node)
-        for neighbor in graph.get(node, []):
-            dfs(neighbor)
-        order.append(node)
+        visited_tasks.add(task)
+        for dependency in dependency_graph.get(task, []):
+            process_task(dependency)
+        tasks_to_process.append(task)
 
-    for node in graph:
-        dfs(node)
-    return order[::-1]
+    process_task(target_task)
 
+    if not tasks_to_process:
+        print("Все задачи уже были выполнены.")
+    else:
+        for task in tasks_to_process:
+            if task not in completed_tasks:
+                print(f"{task}")
+                completed_tasks.add(task)
 
-def create_makefile(dependencies):
-    """Создаем Makefile с учетом топологического порядка зависимостей."""
-    with open("Makefile", "w") as makefile:
-        for target in dependencies:
-            deps = ' '.join(dependencies[target])
-            makefile.write(f"{target}: {deps}\n")
-            makefile.write(f"\t@echo {target}\n\n")
-
-
-def main():
-    # Загрузить граф зависимостей
-    graph = load_dependencies("civgraph.json")
-
-    # Определить топологический порядок для Makefile
-    sorted_technologies = topological_sort(graph)
-
-    # Формируем словарь зависимостей для Makefile
-    dependencies = {tech: graph.get(tech, []) for tech in sorted_technologies}
-
-    # Создаем Makefile
-    create_makefile(dependencies)
-    print("Makefile создан.")
+        save_tasks(completed_tasks)
 
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    # Загружаем граф зависимостей из файла
+    dependency_graph = load_dependency_graph('civgraph.json')
+
+    if not dependency_graph:
+        print("Не удалось загрузить граф зависимостей. Программа завершена.")
+    else:
+        target_task = input('>make ')
+        generate_makefile(dependency_graph, target_task)
 ```
 
 ## Результат:
 
-
-
+![image](https://github.com/user-attachments/assets/89649a28-4024-4df2-a3bf-8b0ab29f1236)
 
 ## Задача 3
 
