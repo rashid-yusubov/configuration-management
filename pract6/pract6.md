@@ -134,7 +134,7 @@ if __name__ == "__main__":
 
 ## Результат:
 
-![image](https://github.com/user-attachments/assets/87d7e59f-4a97-4ed9-89e0-6e9366b3d289)
+![image](https://github.com/user-attachments/assets/13c5482c-ba83-40c5-9fd0-bbd0aa0bc242)
 
 ## Задача 2
 
