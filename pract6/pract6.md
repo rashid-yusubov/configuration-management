@@ -192,7 +192,7 @@ if __name__ == '__main__':
 
 ## Решение:
 
-```
+```Python
 import json
 import os
 
