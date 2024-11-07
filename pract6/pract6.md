@@ -67,65 +67,35 @@ mathematics
 
 ```Python
 import json
-import subprocess
 
 
-def load_dependencies(filename):
-    """Загрузить граф зависимостей из файла JSON."""
-    with open(filename, 'r') as file:
-        return json.load(file)
+def parse_civgraph(civgraph_file):
+    # Чтение JSON-файла
+    with open(civgraph_file, 'r') as file:
+        data = json.load(file)
+
+    return data
 
 
-def topological_sort(graph):
-    """Проводим топологическую сортировку графа зависимостей."""
-    visited = set()
-    order = []
-
-    def dfs(node):
-        if node in visited:
-            return
-        visited.add(node)
-        for neighbor in graph.get(node, []):
-            dfs(neighbor)
-        order.append(node)
-
-    for node in graph:
-        dfs(node)
-    return order[::-1]
-
-
-def create_makefile(dependencies):
-    """Создаем Makefile с учетом топологического порядка зависимостей."""
-    with open("Makefile", "w") as makefile:
-        for target in dependencies:
-            deps = ' '.join(dependencies[target])
-            makefile.write(f"{target}: {deps}\n")
-            makefile.write(f"\t@echo {target}\n\n")
-
-def run_make(target):
-    print("make", target)
-    print("")
-    """Запускаем make для указанной цели и выводим результат."""
-    result = subprocess.run(["mingw32-make", target], capture_output=True, text=True)
-    print(result.stdout)
+def generate_makefile(data, output_file):
+    with open(output_file, 'w') as file:
+        for target, dependencies in data.items():
+            # Формируем правило для Makefile
+            dep_str = " ".join(dependencies) if dependencies else ""
+            file.write(f"{target}: {dep_str}\n")
+            file.write(f"\t@echo {target}\n\n")  # Простое действие для примера
 
 
 def main():
-    # Загрузить граф зависимостей
-    graph = load_dependencies("civgraph.json")
+    civgraph_file = "civgraph.json"  # Имя файла с графом зависимостей
+    output_file = "Makefile"  # Имя итогового Makefile
 
-    # Определить топологический порядок для Makefile
-    sorted_technologies = topological_sort(graph)
+    # Чтение данных из civgraph.json
+    data = parse_civgraph(civgraph_file)
 
-    # Формируем словарь зависимостей для Makefile
-    dependencies = {tech: graph.get(tech, []) for tech in sorted_technologies}
-
-    # Создаем Makefile
-    create_makefile(dependencies)
-    print("Makefile создан.")
-
-    # Запускаем make для цели "mathematics"
-    run_make("mathematics")
+    # Генерация Makefile
+    generate_makefile(data, output_file)
+    print(f"Makefile был сгенерирован в {output_file}")
 
 
 if __name__ == "__main__":
@@ -134,7 +104,7 @@ if __name__ == "__main__":
 
 ## Результат:
 
-![image](https://github.com/user-attachments/assets/13c5482c-ba83-40c5-9fd0-bbd0aa0bc242)
+![image](https://github.com/user-attachments/assets/2a874122-53ed-4e9c-9e93-bb94726032d8)
 
 ## Задача 2
 
