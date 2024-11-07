@@ -84,7 +84,7 @@ deactivate P
 
 ## Результат
 
-![plantuml](https://github.com/user-attachments/assets/365884d4-1d08-46d3-99a0-1006e9afa244)
+![plantuml (1)](https://github.com/user-attachments/assets/7eeaf8be-1ff0-430b-972e-304bd041de7d)
 
 ## Задача 3
 
