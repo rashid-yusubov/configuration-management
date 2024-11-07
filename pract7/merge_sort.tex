@@ -1,0 +1,54 @@
+% ===> this file was generated automatically by noweave --- better not edit it
+
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{listings}  % Подключение пакета для кода
+
+\begin{document}
+
+\chapter{Алгоритм сортировки слиянием}
+
+Этот документ описывает алгоритм сортировки слиянием с использованием noweb.
+
+\section{Описание алгоритма}
+
+Алгоритм сортировки слиянием разделяет список на две половины, рекурсивно сортирует их, а затем сливает отсортированные половины.
+
+\subsection{Шаги алгоритма}
+
+1. Разделить список на две половины.
+2. Рекурсивно отсортировать каждую из половин.
+3. Слить отсортированные половины в один отсортированный список.
+
+\section{Исходный код}
+
+\subsection{Функция слияния}
+
+\begin{lstlisting}[language=Haskell]
+merge :: Ord a => [a] -> [a] -> [a]
+merge [] ys = ys
+merge xs [] = xs
+merge (x:xs) (y:ys)
+  | x < y     = x : merge xs (y:ys)
+  | otherwise = y : merge (x:xs) ys
+\end{lstlisting}
+
+\subsection{Основная функция сортировки слиянием}
+
+\begin{lstlisting}[language=Haskell]
+mergeSort :: Ord a => [a] -> [a]
+mergeSort [] = []
+mergeSort [x] = [x]
+mergeSort xs = merge (mergeSort left) (mergeSort right)
+  where
+    (left, right) = splitAt (length xs `div` 2) xs
+\end{lstlisting}
+
+\section{Заключение}
+
+Алгоритм сортировки слиянием эффективно сортирует элементы, рекурсивно деля их и объединяя.
+
+\end{document}
+
+\nwfilename{merge_sort.nw}
