@@ -48,6 +48,7 @@
 
 ```PlantUML
 @startuml
+skinparam lifelineStrategy nosolid
 actor "Студент Юсубов Р.Х." as S
 database Piazza as P
 actor Преподаватель as T
@@ -56,35 +57,34 @@ T -> P : Публикация задачи
 activate P
 P --> T : Задача опубликована
 deactivate P
-
+...
 S -> P : Поиск задач
 activate P
 P --> S : Получение задачи
 deactivate P
-
+...
 S -> P : Публикация решения
 activate P
 P --> S : Решение опубликовано
 deactivate P
-
+...
 T -> P : Поиск решений
 activate P
 P --> T : Решение найдено
 T -> P : Публикация оценки
 P --> T : Оценка опубликована
 deactivate P
-
+...
 S -> P : Проверка оценки
 activate P
 P --> S : Оценка получена
 deactivate P
-
 @enduml
 ```
 
 ## Результат
 
-![plantuml (1)](https://github.com/user-attachments/assets/7eeaf8be-1ff0-430b-972e-304bd041de7d)
+![plantum](https://github.com/user-attachments/assets/0a57d9c6-18c4-4b68-bcb4-6d79c084f1bb)
 
 ## Задача 3
 
