@@ -67,66 +67,69 @@ mathematics
 
 ```Python
 import json
-from collections import defaultdict, deque
+import subprocess
 
 
 def load_dependencies(filename):
+    """Загрузить граф зависимостей из файла JSON."""
     with open(filename, 'r') as file:
-        data = json.load(file)
-    return data
-
-
-def build_graph(dependencies):
-    graph = defaultdict(list)
-    # Сначала добавляем все узлы в граф и их зависимости
-    for item, deps in dependencies.items():
-        graph[item]  # Гарантируем, что каждый элемент есть в графе
-        for dep in deps:
-            graph[dep]  # Также добавляем зависимость как узел
-            graph[dep].append(item)
-    return graph
+        return json.load(file)
 
 
 def topological_sort(graph):
-    in_degree = {node: 0 for node in graph}  # Инициализируем in_degree для всех узлов
-    for deps in graph.values():
-        for dep in deps:
-            in_degree[dep] += 1
+    """Проводим топологическую сортировку графа зависимостей."""
+    visited = set()
+    order = []
 
-    queue = deque([node for node in in_degree if in_degree[node] == 0])
-    sorted_items = []
+    def dfs(node):
+        if node in visited:
+            return
+        visited.add(node)
+        for neighbor in graph.get(node, []):
+            dfs(neighbor)
+        order.append(node)
 
-    while queue:
-        node = queue.popleft()
-        sorted_items.append(node)
-        for neighbor in graph[node]:
-            in_degree[neighbor] -= 1
-            if in_degree[neighbor] == 0:
-                queue.append(neighbor)
-
-    return sorted_items
+    for node in graph:
+        dfs(node)
+    return order[::-1]
 
 
-def main(target):
-    dependencies = load_dependencies('civgraph.json')
-    graph = build_graph(dependencies)
+def create_makefile(dependencies):
+    """Создаем Makefile с учетом топологического порядка зависимостей."""
+    with open("Makefile", "w") as makefile:
+        for target in dependencies:
+            deps = ' '.join(dependencies[target])
+            makefile.write(f"{target}: {deps}\n")
+            makefile.write(f"\t@echo {target}\n\n")
 
-    # Добавляем цель как узел, если у нее есть зависимости
-    if target in dependencies:
-        graph[target]  # Убедимся, что цель есть в графе
+def run_make(target):
+    print("make", target)
+    print("")
+    """Запускаем make для указанной цели и выводим результат."""
+    result = subprocess.run(["mingw32-make", target], capture_output=True, text=True)
+    print(result.stdout)
 
-    sorted_items = topological_sort(graph)
 
-    # Находим индекс цели и выводим все элементы перед ней
-    if target in sorted_items:
-        index = sorted_items.index(target)
-        for item in sorted_items[:index + 1]:
-            print(item)
+def main():
+    # Загрузить граф зависимостей
+    graph = load_dependencies("civgraph.json")
+
+    # Определить топологический порядок для Makefile
+    sorted_technologies = topological_sort(graph)
+
+    # Формируем словарь зависимостей для Makefile
+    dependencies = {tech: graph.get(tech, []) for tech in sorted_technologies}
+
+    # Создаем Makefile
+    create_makefile(dependencies)
+    print("Makefile создан.")
+
+    # Запускаем make для цели "mathematics"
+    run_make("mathematics")
 
 
 if __name__ == "__main__":
-    target = "mathematics"  # Здесь можно указать любую цель
-    main(target)
+    main()
 ```
 
 ## Результат:
@@ -139,10 +142,65 @@ if __name__ == "__main__":
 
 ## Решение:
 
-```
+```Python
+import json
+
+
+def load_dependencies(filename):
+    """Загрузить граф зависимостей из файла JSON."""
+    with open(filename, 'r') as file:
+        return json.load(file)
+
+
+def topological_sort(graph):
+    """Проводим топологическую сортировку графа зависимостей."""
+    visited = set()
+    order = []
+
+    def dfs(node):
+        if node in visited:
+            return
+        visited.add(node)
+        for neighbor in graph.get(node, []):
+            dfs(neighbor)
+        order.append(node)
+
+    for node in graph:
+        dfs(node)
+    return order[::-1]
+
+
+def create_makefile(dependencies):
+    """Создаем Makefile с учетом топологического порядка зависимостей."""
+    with open("Makefile", "w") as makefile:
+        for target in dependencies:
+            deps = ' '.join(dependencies[target])
+            makefile.write(f"{target}: {deps}\n")
+            makefile.write(f"\t@echo {target}\n\n")
+
+
+def main():
+    # Загрузить граф зависимостей
+    graph = load_dependencies("civgraph.json")
+
+    # Определить топологический порядок для Makefile
+    sorted_technologies = topological_sort(graph)
+
+    # Формируем словарь зависимостей для Makefile
+    dependencies = {tech: graph.get(tech, []) for tech in sorted_technologies}
+
+    # Создаем Makefile
+    create_makefile(dependencies)
+    print("Makefile создан.")
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 ## Результат:
+
+
 
 
 ## Задача 3
