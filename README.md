@@ -13,7 +13,7 @@
   
 - Практическая работа №4 - [pract4.md](https://github.com/Rashid-Yusubov/Configuration-management/blob/main/pract4/pract4.md)
   
-- Практическая работа №5 - [pract5.md](https://github.com/Rashid-Yusubov/Configuration-management/blob/main/pract5/pract5.md)
+- Практическая работа №5 - pract5.md
   
 - Практическая работа №6 - [pract6.md](https://github.com/Rashid-Yusubov/Configuration-management/blob/main/pract6/pract6.md)
   
