@@ -13,19 +13,35 @@ class ShellEmulator:
         self.log_data = []
         self._file_system = {self.current_dir: []}  # Инициализация корневой директории
 
-def load_filesystem(self):
-    """Загружает виртуальную файловую систему (архив tar)"""
-    with tarfile.open(self.fs_path, mode="r") as tar:
-        for member in tar.getmembers():
-            member.name = "/" + member.name  # гарантируем, что путь начинается с /
-            member_path = member.name.split("/")
-            if len(member_path) == 2:
-                self._file_system["/"].append(member.name)
-                self._file_system[member.name] = []
-                continue
+    def load_filesystem(self):
+        """Загружает виртуальную файловую систему (архив tar)"""
+        with tarfile.open(self.fs_path, mode="r") as tar:
+            for member in tar.getmembers():
+                member.name = "/" + member.name  # гарантируем, что путь начинается с /
+                member_path = member.name.split("/")
+                if len(member_path) == 2:
+                    self._file_system["/"].append(member.name)
+                    self._file_system[member.name] = []
+                    continue
 
-            parent = "/".join(member_path[:-1])
-            if parent not in self._file_system:
-                self._file_system[parent] = []
-            self._file_system[parent].append(member.name)
-            self._file_system[member.name] = []
+                parent = "/".join(member_path[:-1])
+                if parent not in self._file_system:
+                    self._file_system[parent] = []
+                self._file_system[parent].append(member.name)
+                self._file_system[member.name] = []
+
+    def log_action(self, action):
+        """Записывает действия в лог"""
+        entry = {
+            "timestamp": datetime.datetime.now().isoformat(),
+            "user": self.username,
+            "action": action
+        }
+        self.log_data.append(entry)
+
+    def _write_log(self):
+        """Записывает накопленные логи в файл"""
+        with open(self.log_path, "a") as log_file:
+            for entry in self.log_data:
+                json.dump(entry, log_file, indent=4)
+                log_file.write("\n")
