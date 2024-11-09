@@ -71,3 +71,8 @@ class ShellEmulator:
             print(f"Directory {path} not found")
             self.log_action(f"cd failed for {path}")
 
+    def pwd(self):
+        """Выводит текущую директорию"""
+        print(f"Current directory: {self.current_dir}")
+        self.log_action("pwd")
+
