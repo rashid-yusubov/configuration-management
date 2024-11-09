@@ -97,4 +97,9 @@ class ShellEmulator:
         print(f"Copied {source} to {destination}")
         self.log_action(f"cp {source} {destination}")
 
+    def whoami(self):
+        """Выводит имя пользователя"""
+        print(f"User: {self.username}")
+        self.log_action("whoami")
+
 
