@@ -46,6 +46,22 @@ class ShellEmulator:
                 json.dump(entry, log_file, indent=4)
                 log_file.write("\n")
 
+    def _get_absolute_path(self, path):
+        """Преобразует путь в абсолютный относительно текущей директории"""
+        if path == "." or path == "./":
+            return self.current_dir
+        elif path == ".." or path == "../":
+            parent = "/".join(self.current_dir.strip("/").split("/")[:-1])
+            return "/" + parent if parent else "/"
+        elif path.startswith("/"):
+            return path
+        else:
+            return str(PurePosixPath(self.current_dir) / path)
+
+    def is_valid_file(self, path):
+        """Проверяет, существует ли файл в виртуальной файловой системе"""
+        return path in self._file_system and isinstance(self._file_system[path], list) and not self._file_system[path]
+
     def ls(self):
         """Выводит список файлов в текущей директории"""
         if self.current_dir not in self._file_system:
