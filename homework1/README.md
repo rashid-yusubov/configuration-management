@@ -58,5 +58,12 @@
 Для работы с проектом необходимо иметь установленный Python 3.x.
 
 ### Установка зависимостей:
+
 ```bash
 pip install -r requirements.txt
+```
+
+### Запуск эмулятора:
+```bash
+python shell_emulator.py --username <your_username> --fs <path_to_filesystem.tar> --log <path_to_log_file>
+```
