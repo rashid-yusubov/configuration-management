@@ -1,0 +1,25 @@
+{
+    "timestamp": "2024-11-09T22:59:52.023082",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-09T23:00:01.805488",
+    "user": "rashid_yusubov",
+    "action": "pwd"
+}
+{
+    "timestamp": "2024-11-09T23:00:06.555255",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-09T23:00:12.430499",
+    "user": "rashid_yusubov",
+    "action": "pwd"
+}
+{
+    "timestamp": "2024-11-09T23:00:57.426093",
+    "user": "rashid_yusubov",
+    "action": "exit"
+}

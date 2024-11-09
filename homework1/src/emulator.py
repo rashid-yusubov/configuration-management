@@ -4,6 +4,7 @@ import tarfile
 import datetime
 from pathlib import PurePosixPath
 
+
 class ShellEmulator:
     def __init__(self, username, fs_path, log_path):
         self.username = username
@@ -11,7 +12,8 @@ class ShellEmulator:
         self.log_path = log_path
         self.current_dir = '/'
         self.log_data = []
-        self._file_system = {self.current_dir: []}  # Инициализация корневой директории
+        self._file_system = {self.current_dir: []}  # инициализируем корневую директорию
+        self.load_filesystem()
 
     def load_filesystem(self):
         """Загружает виртуальную файловую систему (архив tar)"""
@@ -108,6 +110,7 @@ class ShellEmulator:
             self.log_action(f"cp failed for {source} to {destination}")
             return
 
+        # Добавляем файл в виртуальную файловую систему
         self._file_system[destination_path] = []
         self._file_system[destination_dir].append(destination_path)
         print(f"Copied {source} to {destination}")
@@ -152,6 +155,7 @@ class ShellEmulator:
             else:
                 print("Неизвестная команда")
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Эмулятор оболочки")
     parser.add_argument("--username", required=True, help="Имя пользователя для оболочки")
@@ -161,4 +165,3 @@ if __name__ == "__main__":
 
     emulator = ShellEmulator(args.username, args.fs, args.log)
     emulator.run()
-
