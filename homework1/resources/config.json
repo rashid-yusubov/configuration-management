@@ -1,5 +1,0 @@
-{
-    "filesystem": "resources/archive.tar",
-    "log_file": "resources/log.csv",
-    "start_script": "resources/start_script.sh"
-}
