@@ -102,39 +102,39 @@ class ShellEmulator:
         print(f"User: {self.username}")
         self.log_action("whoami")
 
-def exit(self):
-    """Завершает работу эмулятора и записывает логи"""
-    print("Выход из эмулятора оболочки.")
-    self.log_action("exit")
-    self._write_log()
-    exit(0)
+    def exit(self):
+        """Завершает работу эмулятора и записывает логи"""
+        print("Выход из эмулятора оболочки.")
+        self.log_action("exit")
+        self._write_log()
+        exit(0)
 
-def run(self):
-    """Основной цикл работы эмулятора"""
-    while True:
-        command = input(f"{self.username}@emulator:~{self.current_dir}$ ").strip().split()
-        if not command:
-            continue
-        if command[0] == "ls":
-            self.ls()
-        elif command[0] == "cd":
-            if len(command) > 1:
-                self.cd(command[1])
+    def run(self):
+        """Основной цикл работы эмулятора"""
+        while True:
+            command = input(f"{self.username}@emulator:~{self.current_dir}$ ").strip().split()
+            if not command:
+                continue
+            if command[0] == "ls":
+                self.ls()
+            elif command[0] == "cd":
+                if len(command) > 1:
+                    self.cd(command[1])
+                else:
+                    print("Необходимо указать путь для команды 'cd'.")
+            elif command[0] == "pwd":
+                self.pwd()
+            elif command[0] == "cp":
+                if len(command) > 2:
+                    self.cp(command[1], command[2])
+                else:
+                    print("Необходимо указать исходный и конечный путь для команды 'cp'.")
+            elif command[0] == "whoami":
+                self.whoami()
+            elif command[0] == "exit":
+                self.exit()
             else:
-                print("Необходимо указать путь для команды 'cd'.")
-        elif command[0] == "pwd":
-            self.pwd()
-        elif command[0] == "cp":
-            if len(command) > 2:
-                self.cp(command[1], command[2])
-            else:
-                print("Необходимо указать исходный и конечный путь для команды 'cp'.")
-        elif command[0] == "whoami":
-            self.whoami()
-        elif command[0] == "exit":
-            self.exit()
-        else:
-            print("Неизвестная команда")
+                print("Неизвестная команда")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Эмулятор оболочки")
