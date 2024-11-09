@@ -23,3 +23,43 @@
     "user": "rashid_yusubov",
     "action": "exit"
 }
+{
+    "timestamp": "2024-11-09T23:02:08.749599",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-09T23:02:31.501731",
+    "user": "rashid_yusubov",
+    "action": "whoami"
+}
+{
+    "timestamp": "2024-11-09T23:02:38.321118",
+    "user": "rashid_yusubov",
+    "action": "cd home"
+}
+{
+    "timestamp": "2024-11-09T23:02:41.276517",
+    "user": "rashid_yusubov",
+    "action": "pwd"
+}
+{
+    "timestamp": "2024-11-09T23:02:43.199010",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-09T23:03:02.931942",
+    "user": "rashid_yusubov",
+    "action": "cp file1.txt file1_copy.txt"
+}
+{
+    "timestamp": "2024-11-09T23:03:05.802767",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-09T23:03:12.842480",
+    "user": "rashid_yusubov",
+    "action": "exit"
+}
