@@ -59,3 +59,15 @@ class ShellEmulator:
         else:
             print("No files in directory.")
         self.log_action("ls")
+
+    def cd(self, path):
+        """Меняет текущую директорию"""
+        absolute_path = self._get_absolute_path(path)
+        if absolute_path in self._file_system:
+            self.current_dir = absolute_path
+            print(f"Changed directory to {self.current_dir}")
+            self.log_action(f"cd {path}")
+        else:
+            print(f"Directory {path} not found")
+            self.log_action(f"cd failed for {path}")
+
