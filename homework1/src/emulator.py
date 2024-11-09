@@ -45,3 +45,17 @@ class ShellEmulator:
             for entry in self.log_data:
                 json.dump(entry, log_file, indent=4)
                 log_file.write("\n")
+
+    def ls(self):
+        """Выводит список файлов в текущей директории"""
+        if self.current_dir not in self._file_system:
+            print(f"Directory {self.current_dir} not found")
+            self.log_action(f"ls failed for {self.current_dir}")
+            return
+
+        files = [filename.split("/")[-1] for filename in self._file_system[self.current_dir]]
+        if files:
+            print("\n".join(files))
+        else:
+            print("No files in directory.")
+        self.log_action("ls")
