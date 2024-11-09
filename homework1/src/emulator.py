@@ -136,4 +136,13 @@ def run(self):
         else:
             print("Неизвестная команда")
 
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Эмулятор оболочки")
+    parser.add_argument("--username", required=True, help="Имя пользователя для оболочки")
+    parser.add_argument("--fs", required=True, help="Путь к виртуальной файловой системе (файл tar)")
+    parser.add_argument("--log", required=True, help="Путь к файлу лога")
+    args = parser.parse_args()
+
+    emulator = ShellEmulator(args.username, args.fs, args.log)
+    emulator.run()
 
