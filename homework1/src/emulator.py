@@ -76,3 +76,25 @@ class ShellEmulator:
         print(f"Current directory: {self.current_dir}")
         self.log_action("pwd")
 
+    def cp(self, source, destination):
+        """Копирует файл из одного места в другое"""
+        source_path = self._get_absolute_path(source)
+        destination_path = self._get_absolute_path(destination)
+
+        if not self.is_valid_file(source_path):
+            print(f"Source file {source} does not exist.")
+            self.log_action(f"cp failed for {source} to {destination}")
+            return
+
+        destination_dir = str(PurePosixPath(destination_path).parent)
+        if destination_dir not in self._file_system:
+            print(f"Destination directory {destination} does not exist.")
+            self.log_action(f"cp failed for {source} to {destination}")
+            return
+
+        self._file_system[destination_path] = []
+        self._file_system[destination_dir].append(destination_path)
+        print(f"Copied {source} to {destination}")
+        self.log_action(f"cp {source} {destination}")
+
+
