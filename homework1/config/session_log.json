@@ -63,3 +63,34 @@
     "user": "rashid_yusubov",
     "action": "exit"
 }
+{
+    "timestamp": "2024-11-10T02:24:32.209501",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-10T02:24:41.103610",
+    "user": "rashid_yusubov",
+    "action": "exit"
+}
+{
+    "timestamp": "2024-11-10T02:38:11.271253",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}{
+    "timestamp": "2024-11-10T02:38:12.566359",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}{
+    "timestamp": "2024-11-10T02:38:13.324417",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}{
+    "timestamp": "2024-11-10T02:38:14.382139",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}{
+    "timestamp": "2024-11-10T02:38:17.288164",
+    "user": "rashid_yusubov",
+    "action": "exit"
+}
