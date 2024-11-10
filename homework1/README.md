@@ -224,6 +224,13 @@ def run(self):
 
 Для работы с проектом необходимо иметь установленный Python 3.12
 
+### Клонирование репозитория:
+
+```bash
+git clone https://github.com/Rashid-Yusubov/Configuration-management.git
+cd Configuration-management
+```
+
 ### Установка зависимостей:
 
 ```bash
