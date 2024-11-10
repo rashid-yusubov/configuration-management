@@ -67,3 +67,11 @@ pip install -r requirements.txt
 ```bash
 python shell_emulator.py --username <your_username> --fs <path_to_filesystem.tar> --log <path_to_log_file>
 ```
+## 4. Пример использования:
+
+### Пример 1: Запуск эмулятора
+
+![image](https://github.com/user-attachments/assets/084cd7d2-45a2-4b36-98b9-4ea78f899f04)
+
+### Пример 2: Команды оболочки
+
