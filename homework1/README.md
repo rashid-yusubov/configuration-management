@@ -32,16 +32,16 @@ homework1/
   - `fs_path`: Путь к архиву tar с виртуальной файловой системой.
   - `log_path`: Путь к файлу для записи логов.
 
-    ```Python
-     def __init__(self, username, fs_path, log_path):
-        self.username = username
-        self.fs_path = fs_path
-        self.log_path = log_path
-        self.current_dir = '/'
-        self.log_data = []
-        self._file_system = {self.current_dir: []}  # инициализируем корневую директорию
-        self.load_filesystem()
-    ```
+```Python
+ def __init__(self, username, fs_path, log_path):
+    self.username = username
+    self.fs_path = fs_path
+    self.log_path = log_path
+    self.current_dir = '/'
+    self.log_data = []
+    self._file_system = {self.current_dir: []}  # инициализируем корневую директорию
+    self.load_filesystem()
+```
 
 #### `load_filesystem(self)`
 - **Описание**: Загружает виртуальную файловую систему из архива tar.
