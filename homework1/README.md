@@ -9,7 +9,18 @@
 - Поддержка виртуальной файловой системы, загружаемой из архива tar.
 - Логирование всех действий пользователя.
 - Поддержка базовых команд для работы с файлами и директориями.
-  
+
+### Структура проекта:
+```bash
+homework1/
+├── config/
+│   ├── session_log.json  # Файл для логов
+│   └── virtual_fs.tar # Виртуальная файловая система
+├── src/
+│   └── shell_emulator.py # Основной файл с программой
+└── tests/
+    └── test_shell_emulator.py # Файл с тестами
+```
 ## 2. Описание всех функций и настроек
 
 ### Класс `ShellEmulator`
@@ -74,4 +85,3 @@ python shell_emulator.py --username <your_username> --fs <path_to_filesystem.tar
 ![image](https://github.com/user-attachments/assets/084cd7d2-45a2-4b36-98b9-4ea78f899f04)
 
 ### Пример 2: Команды оболочки
-
