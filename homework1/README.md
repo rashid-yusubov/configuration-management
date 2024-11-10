@@ -82,6 +82,5 @@ python shell_emulator.py --username <your_username> --fs <path_to_filesystem.tar
 
 ### Пример 1: Запуск эмулятора
 
-![image](https://github.com/user-attachments/assets/084cd7d2-45a2-4b36-98b9-4ea78f899f04)
+![prewiew (1) (1)](https://github.com/user-attachments/assets/bd67fff9-6052-48f1-9745-7adc7fd82fe6)
 
-### Пример 2: Команды оболочки
