@@ -80,7 +80,8 @@ python shell_emulator.py --username <your_username> --fs <path_to_filesystem.tar
 ```
 ## 4. Пример использования:
 
-### Пример 1: Запуск эмулятора
-
 ![prewiew (1) (1)](https://github.com/user-attachments/assets/bd67fff9-6052-48f1-9745-7adc7fd82fe6)
 
+## 5. Результаты прогона тестов:
+
+![image](https://github.com/user-attachments/assets/749945c3-f281-4827-b8a1-7adbd60ff6ff)
