@@ -124,7 +124,6 @@ class ShellEmulator:
 
     def exit(self):
         """Завершает работу эмулятора и записывает логи"""
-        print("Выход из эмулятора оболочки.")
         self.log_action("exit")
         self._write_log()
         exit(0)
