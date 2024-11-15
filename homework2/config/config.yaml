@@ -1,4 +1,4 @@
-visualizer_path: /usr/local/bin/plantuml  # Путь к программе для визуализации
-repository_path: /path/to/repository      # Путь к репозиторию
-output_path: /path/to/output.puml         # Путь к файлу, в который будет сохранён код PlantUML
-tag_name: v1.0                            # Имя тега
+plantuml_path: "./config/plantuml.jar"  # Путь к файлу plantuml.jar
+repository_path: "/путь/к/вашему/git/репозиторию"  # Путь к анализируемому репозиторию
+output_path: "./config/output.puml"    # Путь к файлу для генерации диаграммы
+tag_name: "v1.0"                       # Имя тега для анализа
