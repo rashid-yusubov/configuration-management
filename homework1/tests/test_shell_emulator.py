@@ -1,8 +1,6 @@
 import pytest
 from homework1.src.shell_emulator import ShellEmulator
 import tarfile
-import json
-import os
 
 
 @pytest.fixture
