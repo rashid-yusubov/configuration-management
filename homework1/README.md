@@ -60,6 +60,7 @@
 ### Установка зависимостей:
 
 ```bash
+cd homework1
 pip install -r requirements.txt
 ```
 
