@@ -1,3 +1,4 @@
-repository_path: /path/to/repository
-output_path: /path/to/output.puml
-tag_name: v1.0
+visualizer_path: /usr/local/bin/plantuml  # Путь к программе для визуализации
+repository_path: /path/to/repository      # Путь к репозиторию
+output_path: /path/to/output.puml         # Путь к файлу, в который будет сохранён код PlantUML
+tag_name: v1.0                            # Имя тега
