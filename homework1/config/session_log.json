@@ -168,3 +168,293 @@
     "user": "rashid_yusubov",
     "action": "exit"
 }
+{
+    "timestamp": "2024-11-15T12:46:06.343213",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T12:46:15.014069",
+    "user": "rashid_yusubov",
+    "action": "cd .."
+}
+{
+    "timestamp": "2024-11-15T12:46:16.220193",
+    "user": "rashid_yusubov",
+    "action": "cd ././"
+}
+{
+    "timestamp": "2024-11-15T12:46:17.709892",
+    "user": "rashid_yusubov",
+    "action": "cd failed for ///"
+}
+{
+    "timestamp": "2024-11-15T12:46:18.767783",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T12:46:20.587161",
+    "user": "rashid_yusubov",
+    "action": "cd failed for sasdasd"
+}
+{
+    "timestamp": "2024-11-15T12:46:22.355897",
+    "user": "rashid_yusubov",
+    "action": "cd ././."
+}
+{
+    "timestamp": "2024-11-15T12:46:24.464656",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T12:46:25.232732",
+    "user": "rashid_yusubov",
+    "action": "pwd"
+}
+{
+    "timestamp": "2024-11-15T12:46:29.212268",
+    "user": "rashid_yusubov",
+    "action": "cd failed for ////"
+}
+{
+    "timestamp": "2024-11-15T12:46:31.182314",
+    "user": "rashid_yusubov",
+    "action": "cd failed for ............"
+}
+{
+    "timestamp": "2024-11-15T12:46:34.138528",
+    "user": "rashid_yusubov",
+    "action": "cd .."
+}
+{
+    "timestamp": "2024-11-15T12:46:43.285907",
+    "user": "rashid_yusubov",
+    "action": "whoami"
+}
+{
+    "timestamp": "2024-11-15T12:46:47.697653",
+    "user": "rashid_yusubov",
+    "action": "pwd"
+}
+{
+    "timestamp": "2024-11-15T12:46:49.167705",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T12:46:50.923034",
+    "user": "rashid_yusubov",
+    "action": "cd etc"
+}
+{
+    "timestamp": "2024-11-15T12:46:52.327260",
+    "user": "rashid_yusubov",
+    "action": "pwd"
+}
+{
+    "timestamp": "2024-11-15T12:47:03.869474",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T12:47:13.698224",
+    "user": "rashid_yusubov",
+    "action": "cd failed for home"
+}
+{
+    "timestamp": "2024-11-15T12:47:14.977986",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T12:47:18.564343",
+    "user": "rashid_yusubov",
+    "action": "cd .."
+}
+{
+    "timestamp": "2024-11-15T12:47:20.858162",
+    "user": "rashid_yusubov",
+    "action": "cd home"
+}
+{
+    "timestamp": "2024-11-15T12:47:21.553015",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T12:47:45.403518",
+    "user": "rashid_yusubov",
+    "action": "cp failed for reg.ch to /"
+}
+{
+    "timestamp": "2024-11-15T12:47:52.011505",
+    "user": "rashid_yusubov",
+    "action": "cp reg.sh /"
+}
+{
+    "timestamp": "2024-11-15T12:47:54.833993",
+    "user": "rashid_yusubov",
+    "action": "cd .."
+}
+{
+    "timestamp": "2024-11-15T12:47:55.520295",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T12:47:58.853548",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T12:48:00.260100",
+    "user": "rashid_yusubov",
+    "action": "cd .."
+}
+{
+    "timestamp": "2024-11-15T12:48:01.256905",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T12:48:23.701386",
+    "user": "rashid_yusubov",
+    "action": "pwd"
+}
+{
+    "timestamp": "2024-11-15T12:48:26.084803",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T12:49:43.069715",
+    "user": "rashid_yusubov",
+    "action": "exit"
+}
+{
+    "timestamp": "2024-11-15T12:56:36.564603",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T12:56:42.484485",
+    "user": "rashid_yusubov",
+    "action": "cd home"
+}
+{
+    "timestamp": "2024-11-15T12:56:44.391548",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T12:57:00.537438",
+    "user": "rashid_yusubov",
+    "action": "cp failed for reg.sh to /"
+}
+{
+    "timestamp": "2024-11-15T12:57:08.964435",
+    "user": "rashid_yusubov",
+    "action": "pwd"
+}
+{
+    "timestamp": "2024-11-15T12:57:37.236267",
+    "user": "rashid_yusubov",
+    "action": "cp failed for file1.txt to /"
+}
+{
+    "timestamp": "2024-11-15T12:58:45.408817",
+    "user": "rashid_yusubov",
+    "action": "exit"
+}
+{
+    "timestamp": "2024-11-15T12:58:49.634406",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T12:58:52.357373",
+    "user": "rashid_yusubov",
+    "action": "cd home"
+}
+{
+    "timestamp": "2024-11-15T12:58:54.474302",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T12:59:03.636539",
+    "user": "rashid_yusubov",
+    "action": "cp failed for file1.txt to /"
+}
+{
+    "timestamp": "2024-11-15T12:59:24.174397",
+    "user": "rashid_yusubov",
+    "action": "exit"
+}
+{
+    "timestamp": "2024-11-15T13:00:20.766861",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T13:00:23.457406",
+    "user": "rashid_yusubov",
+    "action": "cd home"
+}
+{
+    "timestamp": "2024-11-15T13:00:30.571235",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T13:00:39.514974",
+    "user": "rashid_yusubov",
+    "action": "cp file1.txt /"
+}
+{
+    "timestamp": "2024-11-15T13:00:46.575630",
+    "user": "rashid_yusubov",
+    "action": "cd .."
+}
+{
+    "timestamp": "2024-11-15T13:00:48.463085",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T13:00:58.864447",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T13:01:00.478357",
+    "user": "rashid_yusubov",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-15T13:01:03.624290",
+    "user": "rashid_yusubov",
+    "action": "cd home"
+}
+{
+    "timestamp": "2024-11-15T13:01:57.280826",
+    "user": "rashid_yusubov",
+    "action": "cd failed for home"
+}
+{
+    "timestamp": "2024-11-15T13:02:05.922230",
+    "user": "rashid_yusubov",
+    "action": "pwd"
+}
+{
+    "timestamp": "2024-11-15T13:02:08.912927",
+    "user": "rashid_yusubov",
+    "action": "whoami"
+}
+{
+    "timestamp": "2024-11-15T13:02:39.104050",
+    "user": "rashid_yusubov",
+    "action": "exit"
+}

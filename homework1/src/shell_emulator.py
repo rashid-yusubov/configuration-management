@@ -51,13 +51,13 @@ class ShellEmulator:
 
     def _get_absolute_path(self, path):
         """Преобразует путь в абсолютный относительно текущей директории"""
-        if path == "." or path == "./":
+        if path in [".", "./"]:
             return self.current_dir
-        elif path == ".." or path == "../":
+        elif path in ["..", "../"]:
             parent = "/".join(self.current_dir.strip("/").split("/")[:-1])
             return "/" + parent if parent else "/"
         elif path.startswith("/"):
-            return path
+            return str(PurePosixPath(path))  # Убираем лишние слэши
         else:
             return str(PurePosixPath(self.current_dir) / path)
 
@@ -105,14 +105,18 @@ class ShellEmulator:
             self.log_action(f"cp failed for {source} to {destination}")
             return
 
+        # Если destination — это корневая директория
+        if destination_path == "/":
+            destination_path = f"/{source_path.split('/')[-1]}"
+
         destination_dir = str(PurePosixPath(destination_path).parent)
         if destination_dir not in self._file_system:
-            print(f"Destination directory {destination} does not exist.")
+            print(f"Destination directory {destination_dir} does not exist.")
             self.log_action(f"cp failed for {source} to {destination}")
             return
 
-        # Добавляем файл в виртуальную файловую систему
-        self._file_system[destination_path] = []
+        # Копируем файл
+        self._file_system[destination_path] = self._file_system[source_path]
         self._file_system[destination_dir].append(destination_path)
         print(f"Copied {source} to {destination}")
         self.log_action(f"cp {source} {destination}")
