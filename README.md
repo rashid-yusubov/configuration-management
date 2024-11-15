@@ -21,7 +21,7 @@
 
 ### **Список самостоятельных работ:**
 
-- Самостоятельная работа №1 - [homework1](https://github.com/Rashid-Yusubov/Configuration-management/tree/main/homework1)
+- Самостоятельная работа №1 - [homework1](https://github.com/rashidiusubov/configuration-management/tree/main/homework1)
 
 - Самостоятельная работа №2 - [homework2](https://github.com/Rashid-Yusubov/configuration-management/tree/main/homework2)
   
