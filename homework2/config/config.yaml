@@ -1,0 +1,3 @@
+repository_path: /path/to/repository
+output_path: /path/to/output.puml
+tag_name: v1.0
