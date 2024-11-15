@@ -6,6 +6,7 @@ from pathlib import PurePosixPath
 
 
 class ShellEmulator:
+    """Эмулятор оболочки для управления виртуальной файловой системой."""
     def __init__(self, username, fs_path, log_path):
         self.username = username
         self.fs_path = fs_path
