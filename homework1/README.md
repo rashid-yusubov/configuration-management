@@ -240,7 +240,7 @@ pip install -r requirements.txt
 
 ### Запуск эмулятора:
 ```bash
-python shell_emulator.py --username <your_username> --fs <path_to_filesystem.tar> --log <path_to_log_file>
+python "src/shell_emulator.py" --username "username" --fs "config/virtual_fs.tar" --log "config/session_log.json"
 ```
 ## 4. Пример использования:
 
