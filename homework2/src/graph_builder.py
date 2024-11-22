@@ -1,6 +1,5 @@
 from git_analyzer import read_git_object, parse_commit_object
 
-
 def build_dependency_graph(repo_path, start_commit):
     """Построение графа зависимостей."""
     queue = [start_commit]
@@ -18,7 +17,6 @@ def build_dependency_graph(repo_path, start_commit):
         queue.extend(parents)
 
     return graph
-
 
 def build_plantuml(graph):
     """Создание PlantUML графа."""
