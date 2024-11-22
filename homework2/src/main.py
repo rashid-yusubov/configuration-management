@@ -39,7 +39,7 @@ def main(config_path):
     # Если указан путь к инструменту визуализации, выполнить его
     if visualization_tool_path:
         try:
-            subprocess.run([visualization_tool_path, output_file], check=True)
+            subprocess.run(visualization_tool_path.split(), check=True)
             print(f"Граф визуализирован с использованием {visualization_tool_path}.")
         except Exception as e:
             print(f"Ошибка при вызове PlantUML: {e}")
