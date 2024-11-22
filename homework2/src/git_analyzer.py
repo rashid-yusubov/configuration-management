@@ -1,46 +1,66 @@
+# git_analyzer.py
+
 import os
-import zlib
-import io
+import subprocess
 
 
 def get_commit_by_tag(repo_path, tag_name):
-    """Получение хеша коммита по имени тега."""
-    ref_path = os.path.join(repo_path, '.git', 'refs', 'tags', tag_name)
-    if not os.path.exists(ref_path):
-        raise FileNotFoundError(f"Тег {tag_name} не найден в репозитории.")
+    """Получение хеша коммита по тегу."""
+    try:
+        print(f"Working directory: {os.getcwd()}")  # Отображаем текущую рабочую директорию
+        result = subprocess.run(
+            ['git', 'show-ref', '--tags', tag_name],
+            cwd=repo_path,  # Указываем правильный путь к репозиторию
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        print(f"Output from git show-ref: {result.stdout}")  # Отладочная информация
 
-    with open(ref_path, 'r', encoding='utf-8') as file:
-        return file.read().strip()
+        # Извлекаем хеш коммита из строки
+        ref = result.stdout.strip()
+        if not ref:
+            raise FileNotFoundError(f"Тег {tag_name} не найден в репозитории.")
+
+        commit_hash = ref.split()[0]
+        return commit_hash
+    except subprocess.CalledProcessError:
+        raise FileNotFoundError(f"Тег {tag_name} не найден в репозитории.")
 
 
 def read_git_object(repo_path, object_hash):
-    """Чтение объекта из репозитория Git."""
-    object_path = os.path.join(repo_path, '.git', 'objects', object_hash[:2], object_hash[2:])
-    if not os.path.exists(object_path):
+    """Чтение git-объекта по хешу."""
+    object_path = os.path.join(repo_path, ".git", "objects", object_hash[:2], object_hash[2:])
+    try:
+        with open(object_path, "rb") as file:
+            return file.read()
+    except FileNotFoundError:
         raise FileNotFoundError(f"Объект {object_hash} не найден в репозитории.")
 
-    with open(object_path, "rb") as file:
-        file_content = file.read()
 
-    return zlib.decompress(file_content)
-
-
-def parse_commit_object(data):
-    """Парсинг коммита Git."""
-    # Декодируем данные коммита
-    stream = io.BytesIO(data)
-    header = stream.read(4)  # Должен быть заголовок объекта
-    if header != b'commit':
-        raise ValueError("Неверный объект Git.")
-
-    message = b""
+def parse_commit_object(commit_data):
+    """Разбор данных коммита и извлечение необходимой информации."""
+    commit_lines = commit_data.decode('utf-8').split('\n')
+    message = ""
     parents = []
-    while True:
-        line = stream.readline().strip()
-        if line.startswith(b'parent'):
-            parents.append(line.split(b' ')[1].decode())
-        elif line.startswith(b''):
-            break  # Переходим к сообщению коммита
-        message += line + b'\n'
 
-    return parents, message.decode().strip()
+    for line in commit_lines:
+        if line.startswith("parent"):
+            parents.append(line.split()[1])
+        elif line.startswith("commit"):
+            continue  # Пропускаем строку с хешем коммита
+        else:
+            message = line.strip()
+
+    return message, parents
+
+
+def get_commit_message(repo_path, commit_hash):
+    """Получение сообщения коммита по хешу."""
+    try:
+        commit_data = read_git_object(repo_path, commit_hash)
+        message, parents = parse_commit_object(commit_data)
+        return message, parents
+    except FileNotFoundError as e:
+        print(f"Ошибка при чтении объекта {commit_hash}: {e}")
+        return None, []
