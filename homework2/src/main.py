@@ -4,7 +4,6 @@ import subprocess
 from git_analyzer import get_commit_by_tag
 from graph_builder import build_dependency_graph, build_plantuml
 
-
 def main(config_path):
     # Чтение конфигурации с указанием кодировки
     if not os.path.exists(config_path):
@@ -43,7 +42,6 @@ def main(config_path):
             print(f"Граф визуализирован с использованием {visualization_tool_path}.")
         except Exception as e:
             print(f"Ошибка при вызове PlantUML: {e}")
-
 
 if __name__ == "__main__":
     import sys
