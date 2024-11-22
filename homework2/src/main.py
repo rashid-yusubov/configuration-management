@@ -7,6 +7,9 @@ from git_analyzer import get_commit_by_tag
 
 def load_config(config_path):
     """Загрузка конфигурации из YAML файла."""
+    if not os.path.exists(config_path):
+        raise FileNotFoundError(f"Конфигурационный файл {config_path} не найден.")
+
     with open(config_path, 'r', encoding='utf-8') as file:
         return yaml.safe_load(file)
 
@@ -23,9 +26,17 @@ def build_plantuml(graph):
 
 
 def main(config_path):
-    config = load_config(config_path)
+    try:
+        config = load_config(config_path)
+    except FileNotFoundError as e:
+        print(e)
+        return
 
-    repo_path = config["repo_path"]
+    repo_path = config.get("repository_path")
+    if not os.path.exists(repo_path):
+        print(f"Репозиторий по пути {repo_path} не найден.")
+        return
+
     start_commit = get_commit_by_tag(repo_path, config["tag_name"])
     graph = build_dependency_graph(repo_path, start_commit)
 
@@ -63,5 +74,5 @@ def main(config_path):
 
 
 if __name__ == "__main__":
-    config_path = 'config/config.yml'  # Путь к конфигурационному файлу
+    config_path = '../config/config.yaml'  # Путь к конфигурационному файлу
     main(config_path)
