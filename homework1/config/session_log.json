@@ -633,3 +633,28 @@
     "user": "rashid_yusubov",
     "action": "exit"
 }
+{
+    "timestamp": "2024-11-22T10:32:05.522235",
+    "user": "username",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-11-22T10:32:09.048414",
+    "user": "username",
+    "action": "pwd"
+}
+{
+    "timestamp": "2024-11-22T10:32:12.201074",
+    "user": "username",
+    "action": "whoami"
+}
+{
+    "timestamp": "2024-11-22T10:32:32.558154",
+    "user": "username",
+    "action": "cd home"
+}
+{
+    "timestamp": "2024-11-22T10:32:39.174229",
+    "user": "username",
+    "action": "exit"
+}
