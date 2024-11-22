@@ -4,9 +4,12 @@ import zlib
 def read_git_object(repo_path, object_hash):
     """Чтение объекта из .git/objects."""
     obj_path = os.path.join(repo_path, ".git", "objects", object_hash[:2], object_hash[2:])
-    with open(obj_path, "rb") as file:
-        compressed_data = file.read()
-    return zlib.decompress(compressed_data)
+    try:
+        with open(obj_path, "rb") as file:
+            compressed_data = file.read()
+        return zlib.decompress(compressed_data)
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Объект {object_hash} не найден в репозитории.")
 
 def parse_commit_object(data):
     """Парсинг объекта коммита."""
