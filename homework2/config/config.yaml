@@ -1,4 +1,4 @@
-plantuml_path: "D:/Users/rashi/PycharmProjects/Configuration-management/homework2/config/plantuml.jar"
-repository_path: "D:\Users\rashi\PycharmProjects\Akemu"
-output_path: "D:/Users/rashi/PycharmProjects/Configuration-management/homework2/config/output.puml"
-tag_name: "v1.0"
+visualization_tool_path: "java -jar ./config/plantuml.jar"  # Путь к plantuml.jar
+repository_path: "/path/to/repo"                           # Путь к репозиторию
+output_file_path: "/path/to/output/result.puml"            # Путь для сохранения результата
+tag_name: "v1.0"                                           # Имя тега для анализа
