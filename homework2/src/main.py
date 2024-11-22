@@ -6,12 +6,12 @@ from graph_builder import build_dependency_graph, build_plantuml
 
 
 def main(config_path):
-    # Чтение конфигурации
+    # Чтение конфигурации с указанием кодировки
     if not os.path.exists(config_path):
         print(f"Ошибка: файл конфигурации '{config_path}' не найден.")
         exit(1)
 
-    with open(config_path, "r") as file:
+    with open(config_path, "r", encoding="utf-8") as file:  # Указание кодировки
         config = yaml.safe_load(file)
 
     repo_path = config["repository_path"]
@@ -29,7 +29,7 @@ def main(config_path):
     plantuml_code = build_plantuml(graph)
 
     # Сохранение результата
-    with open(output_file, "w") as file:
+    with open(output_file, "w", encoding="utf-8") as file:  # Указание кодировки
         file.write(plantuml_code)
 
     print(f"Граф зависимостей успешно создан. Сохранён в {output_file}.")
