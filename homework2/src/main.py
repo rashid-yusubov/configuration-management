@@ -1,8 +1,8 @@
 import yaml
 import os
 import subprocess
-from git_analyzer import get_commit_by_tag, build_dependency_graph
-from graph_builder import build_plantuml
+from git_analyzer import get_commit_by_tag
+from graph_builder import build_dependency_graph, build_plantuml
 
 
 def main(config_path):
