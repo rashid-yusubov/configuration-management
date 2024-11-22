@@ -1,66 +1,69 @@
-# git_analyzer.py
-
 import os
-import subprocess
+import zlib
 
 
-def get_commit_by_tag(repo_path, tag_name):
-    """Получение хеша коммита по тегу."""
-    try:
-        print(f"Working directory: {os.getcwd()}")  # Отображаем текущую рабочую директорию
-        result = subprocess.run(
-            ['git', 'show-ref', '--tags', tag_name],
-            cwd=repo_path,  # Указываем правильный путь к репозиторию
-            capture_output=True,
-            text=True,
-            check=True
-        )
-        print(f"Output from git show-ref: {result.stdout}")  # Отладочная информация
+def read_commit_object(repo_path, sha1):
+    """
+    Чтение объекта коммита из репозитория Git.
+    """
+    # Разделяем SHA1 на два компонента
+    object_dir = sha1[:2]
+    object_file = sha1[2:]
 
-        # Извлекаем хеш коммита из строки
-        ref = result.stdout.strip()
-        if not ref:
-            raise FileNotFoundError(f"Тег {tag_name} не найден в репозитории.")
+    object_path = os.path.join(repo_path, ".git", "objects", object_dir, object_file)
+    if not os.path.exists(object_path):
+        raise FileNotFoundError(f"Commit object {sha1} not found.")
 
-        commit_hash = ref.split()[0]
-        return commit_hash
-    except subprocess.CalledProcessError:
-        raise FileNotFoundError(f"Тег {tag_name} не найден в репозитории.")
+    with open(object_path, "rb") as f:
+        compressed_data = f.read()
+        data = zlib.decompress(compressed_data[4:])  # Игнорируем первые 4 байта (long header)
+    return data.decode("utf-8")
 
 
-def read_git_object(repo_path, object_hash):
-    """Чтение git-объекта по хешу."""
-    object_path = os.path.join(repo_path, ".git", "objects", object_hash[:2], object_hash[2:])
-    try:
-        with open(object_path, "rb") as file:
-            return file.read()
-    except FileNotFoundError:
-        raise FileNotFoundError(f"Объект {object_hash} не найден в репозитории.")
-
-
-def parse_commit_object(commit_data):
-    """Разбор данных коммита и извлечение необходимой информации."""
-    commit_lines = commit_data.decode('utf-8').split('\n')
-    message = ""
+def parse_commit_data(commit_data):
+    """
+    Разбирает данные коммита в Git и возвращает родительские SHA1 и сообщение.
+    """
     parents = []
+    message = ""
+    lines = commit_data.splitlines()
 
-    for line in commit_lines:
-        if line.startswith("parent"):
-            parents.append(line.split()[1])
-        elif line.startswith("commit"):
-            continue  # Пропускаем строку с хешем коммита
+    for line in lines:
+        if line.startswith("parent "):
+            parents.append(line[7:])
+        elif line.startswith("author ") or line.startswith("committer "):
+            continue  # Пропускаем авторов и коммиттеров
+        elif message == "":
+            message = line
         else:
-            message = line.strip()
+            message += "\n" + line
+    return parents, message
 
-    return message, parents
 
+def get_commit_data(repo_path, tag_name):
+    """
+    Получаем SHA1 коммита для указанного тега и извлекаем данные о коммитах.
+    """
+    tag_path = os.path.join(repo_path, ".git", "refs", "tags", tag_name)
+    if not os.path.exists(tag_path):
+        raise FileNotFoundError(f"Tag {tag_name} not found.")
 
-def get_commit_message(repo_path, commit_hash):
-    """Получение сообщения коммита по хешу."""
-    try:
-        commit_data = read_git_object(repo_path, commit_hash)
-        message, parents = parse_commit_object(commit_data)
-        return message, parents
-    except FileNotFoundError as e:
-        print(f"Ошибка при чтении объекта {commit_hash}: {e}")
-        return None, []
+    with open(tag_path, "r") as f:
+        start_sha1 = f.read().strip()
+
+    commits = []
+    visited = set()
+    stack = [start_sha1]
+
+    while stack:
+        sha1 = stack.pop()
+        if sha1 in visited:
+            continue
+        visited.add(sha1)
+
+        commit_data = read_commit_object(repo_path, sha1)
+        parents, message = parse_commit_data(commit_data)
+        commits.append({"sha1": sha1, "message": message})
+        stack.extend(parents)  # Добавляем родительские коммиты
+
+    return commits
