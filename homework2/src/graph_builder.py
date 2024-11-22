@@ -1,5 +1,6 @@
 from git_analyzer import read_git_object, parse_commit_object
 
+
 def build_dependency_graph(repo_path, start_commit):
     """Построение графа зависимостей."""
     queue = [start_commit]
@@ -12,11 +13,14 @@ def build_dependency_graph(repo_path, start_commit):
             continue
         visited[commit] = True
         data = read_git_object(repo_path, commit)
+        if data is None:
+            continue  # Пропускаем недоступные объекты
         parents, message = parse_commit_object(data)
         graph.append((commit, message, parents))
         queue.extend(parents)
 
     return graph
+
 
 def build_plantuml(graph):
     """Создание PlantUML графа."""
