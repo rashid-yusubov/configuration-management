@@ -88,16 +88,26 @@ def build_dependency_graph(repo_path, start_commit):
 
 def generate_plantuml(graph, output_file):
     """
-    Генерация кода PlantUML на основе графа зависимостей.
+    Генерация кода PlantUML на основе графа зависимостей,
+    вывод на экран и запись в файл.
     """
-    logging.debug(f"Generating PlantUML file: {output_file}")
+    logging.debug("Generating PlantUML code")
+    plantuml_code = "@startuml\n"
+
+    # Генерация кода для графа
+    for child, parent, message in graph:
+        plantuml_code += f'"{child}\\n{message}" --> "{parent}\\n"\n'
+
+    plantuml_code += "@enduml\n"
+
+    # Выводим на экран
+    print(plantuml_code)
+
+    # Записываем в файл
     try:
         with open(output_file, 'w') as file:
-            file.write("@startuml\n")
-            for child, parent, message in graph:
-                file.write(f'"{child}\\n{message}" --> "{parent}\\n"\n')
-            file.write("@enduml\n")
-        logging.info(f"Dependency graph saved in '{output_file}'")
+            file.write(plantuml_code)
+        logging.debug(f"Dependency graph saved in '{output_file}'")
     except FileNotFoundError:
         logging.error(f"Error: File {output_file} not found.")
     except Exception as e:
@@ -137,7 +147,7 @@ if __name__ == "__main__":
         # Построение графа зависимостей
         dependency_graph = build_dependency_graph(repository_path, start_commit)
 
-        # Генерация файла PlantUML
+        # Генерация и вывод кода PlantUML на экран и запись в файл
         generate_plantuml(dependency_graph, output_file)
 
     except Exception as e:
