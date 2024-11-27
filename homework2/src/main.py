@@ -89,16 +89,16 @@ def generate_plantuml(graph, output_file):
         print(f"Unexpected error: {e}")
 
 
-def find_commit_hash_by_tag(repo_path, tag_name):
+def find_latest_commit(repo_path):
     """
-    Нахождение хэша коммита, связанного с указанным тегом.
+    Нахождение хэша последнего коммита в ветке master.
     """
-    refs_path = os.path.join(repo_path, ".git", "refs", "tags", tag_name)
-    if not os.path.exists(refs_path):
-        raise FileNotFoundError(f"Tag '{tag_name}' not found in repository.")
-    with open(refs_path, 'r') as file:
+    head_path = os.path.join(repo_path, ".git", "refs", "heads", "master")
+    if not os.path.exists(head_path):
+        raise FileNotFoundError("Branch 'master' not found.")
+    with open(head_path, 'r') as file:
         commit_hash = file.read().strip()
-    print(f"Found commit hash for tag {tag_name}: {commit_hash}")
+    print(f"Found latest commit hash: {commit_hash}")
     return commit_hash
 
 
@@ -110,10 +110,9 @@ if __name__ == "__main__":
         visualization_tool_path = config['visualization_tool_path']
         repository_path = config['repository_path']
         output_file = config['output_file_path']
-        tag_name = config['tag_name']
 
-        # Нахождение хэша коммита по тегу
-        start_commit = find_commit_hash_by_tag(repository_path, tag_name)
+        # Нахождение хэша последнего коммита
+        start_commit = find_latest_commit(repository_path)
 
         # Построение графа зависимостей
         dependency_graph = build_dependency_graph(repository_path, start_commit)
