@@ -1,4 +1,4 @@
-visualization_tool_path: "java -jar config/plantuml.jar config/output.puml"  # Путь к plantuml.jar
-repository_path: "D:/Users/rashi/GitHub/repository/Configuration-management"    # Путь к локальному репозиторию
-output_file_path: "./config/output.puml"                    # Путь для сохранения результата (output.puml в папке config)
-tag_name: "pract1"                                           # Имя тега для анализа
+visualization_tool_path: "./config/plantuml.jar"
+repository_path: "D:/Users/rashi/GitHub/repository/test_repo"
+output_file_path: "./config/output.puml"
+tag_name: "v1.0.0"
