@@ -1,124 +1,114 @@
-import os
 import yaml
+import os
+import hashlib
 
-
-def read_config(config_path):
-    """
-    Чтение конфигурационного файла YAML.
-    """
+def load_config(config_path):
+    """Загружает конфигурационный файл."""
     try:
         with open(config_path, 'r') as file:
-            return yaml.safe_load(file)
-    except FileNotFoundError:
-        raise FileNotFoundError(f"Configuration file not found: {config_path}")
-    except yaml.YAMLError as e:
-        raise ValueError(f"Error parsing YAML configuration: {e}")
+            config = yaml.safe_load(file)
+        return config
+    except Exception as e:
+        print(f"Error loading configuration: {e}")
+        return None
 
+def find_commit_hash_for_tag(repository_path, tag_name):
+    """Находит хэш коммита для указанного тега."""
+    try:
+        ref_path = os.path.join(repository_path, '.git', 'refs', 'tags', tag_name)
+        if not os.path.exists(ref_path):
+            print(f"Tag {tag_name} not found in the repository.")
+            return None
+        with open(ref_path, 'r') as file:
+            return file.read().strip()
+    except Exception as e:
+        print(f"Error finding commit hash for tag {tag_name}: {e}")
+        return None
 
-def read_git_object(repo_path, object_hash):
-    """
-    Чтение объекта Git из папки .git/objects.
-    """
-    object_path = os.path.join(repo_path, ".git", "objects", object_hash[:2], object_hash[2:])
-    if not os.path.exists(object_path):
-        raise FileNotFoundError(f"Git object not found: {object_path}")
-    print(f"Reading object at: {object_path}")
-    with open(object_path, 'rb') as file:
-        content = file.read()
-    return decompress_object(content)
+def parse_commit(commit_hash, repository_path):
+    """Парсит информацию о коммите по его хэшу."""
+    try:
+        object_path = os.path.join(repository_path, '.git', 'objects', commit_hash[:2], commit_hash[2:])
+        with open(object_path, 'rb') as file:
+            content = file.read()
+            # Разбираем данные объекта коммита
+            commit_data = content.decode('utf-8')
+            parent_hashes = []
+            message = ''
+            for line in commit_data.splitlines():
+                if line.startswith('parent '):
+                    parent_hashes.append(line.split(' ')[1])
+                elif line.startswith('committer ') or line.startswith('author '):
+                    continue
+                else:
+                    message = line
+            return parent_hashes, message
+    except Exception as e:
+        print(f"Error parsing commit {commit_hash}: {e}")
+        return [], ""
 
+def build_dependency_graph(repository_path, tag_name):
+    """Строит граф зависимостей для коммитов, начиная с тега."""
+    commit_hash = find_commit_hash_for_tag(repository_path, tag_name)
+    if not commit_hash:
+        return []
 
-def decompress_object(data):
-    """
-    Распаковка объекта Git.
-    """
-    import zlib
-    return zlib.decompress(data).decode('utf-8')
-
-
-def parse_commit(commit_content):
-    """
-    Разбор содержимого коммита Git.
-    """
-    lines = commit_content.split('\n')
-    parents = [line.split(' ')[1] for line in lines if line.startswith('parent')]
-    message_index = lines.index('') + 1
-    message = '\n'.join(lines[message_index:]).strip()
-    return parents, message
-
-
-def build_dependency_graph(repo_path, start_commit):
-    """
-    Построение графа зависимостей коммитов.
-    """
     graph = []
-    visited = set()
+    visited_commits = set()
 
-    def dfs(commit_hash):
-        if commit_hash in visited:
+    def process_commit(commit_hash):
+        if commit_hash in visited_commits:
             return
-        visited.add(commit_hash)
-        print(f"Processing commit: {commit_hash}")
-        commit_content = read_git_object(repo_path, commit_hash)
-        parents, message = parse_commit(commit_content)
-        print(f"Commit {commit_hash} has parents: {parents}, message: '{message}'")
-        for parent in parents:
-            graph.append((commit_hash, parent, message))
-            dfs(parent)
+        visited_commits.add(commit_hash)
 
-    dfs(start_commit)
-    print("Final Graph:", graph)
+        parent_hashes, message = parse_commit(commit_hash, repository_path)
+        for parent_hash in parent_hashes:
+            graph.append((commit_hash, parent_hash, message))
+            process_commit(parent_hash)
+
+    # Начинаем с коммита, связанного с тегом
+    process_commit(commit_hash)
     return graph
 
-
 def generate_plantuml(graph, output_file):
-    """
-    Генерация кода PlantUML на основе графа зависимостей.
-    """
-    print(f"Generating PlantUML file: {output_file}")
+    """Генерирует код PlantUML для графа зависимостей."""
+    plantuml_code = '@startuml\n'
+    plantuml_code += 'top to bottom direction\n'  # Добавляем вертикальное расположение узлов
+
+    for parent, child, message in graph:
+        plantuml_code += f'"{child}\n{message}" --> "{parent}"\n'
+
+    plantuml_code += '@enduml'
+
     try:
         with open(output_file, 'w') as file:
-            file.write("@startuml\n")
-            for child, parent, message in graph:
-                file.write(f'"{child}\\n{message}" --> "{parent}\\n"\n')
-            file.write("@enduml\n")
+            file.write(plantuml_code)
         print(f"Dependency graph saved in '{output_file}'")
-    except FileNotFoundError:
-        print(f"Error: File {output_file} not found.")
-    except Exception as e:
-        print(f"Unexpected error: {e}")
+    except IOError as e:
+        print(f"Error writing PlantUML file: {e}")
 
+def main():
+    config_path = '../config/config.yaml'
 
-def find_latest_commit(repo_path):
-    """
-    Нахождение хэша последнего коммита в ветке master.
-    """
-    head_path = os.path.join(repo_path, ".git", "refs", "heads", "master")
-    if not os.path.exists(head_path):
-        raise FileNotFoundError("Branch 'master' not found.")
-    with open(head_path, 'r') as file:
-        commit_hash = file.read().strip()
-    print(f"Found latest commit hash: {commit_hash}")
-    return commit_hash
+    config = load_config(config_path)
+    if not config:
+        return
 
+    # Извлекаем параметры из конфигурации
+    visualization_tool_path = config.get('visualization_tool_path')
+    repository_path = config.get('repository_path')
+    output_file = config.get('output_file_path')
+    tag_name = config.get('tag_name')
+
+    if not all([visualization_tool_path, repository_path, output_file, tag_name]):
+        print("Invalid configuration, missing required parameters.")
+        return
+
+    # Строим граф зависимостей
+    graph = build_dependency_graph(repository_path, tag_name)
+    if graph:
+        print("Final Graph:", graph)
+        generate_plantuml(graph, output_file)
 
 if __name__ == "__main__":
-    config_path = "../config/config.yaml"  # Путь к конфигурационному файлу
-
-    try:
-        config = read_config(config_path)
-        visualization_tool_path = config['visualization_tool_path']
-        repository_path = config['repository_path']
-        output_file = config['output_file_path']
-
-        # Нахождение хэша последнего коммита
-        start_commit = find_latest_commit(repository_path)
-
-        # Построение графа зависимостей
-        dependency_graph = build_dependency_graph(repository_path, start_commit)
-
-        # Генерация файла PlantUML
-        generate_plantuml(dependency_graph, output_file)
-
-    except Exception as e:
-        print(f"Error: {e}")
+    main()
