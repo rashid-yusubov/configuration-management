@@ -1,78 +1,98 @@
-import os
-import subprocess
 import yaml
-from graph_builder import build_dependency_graph
-from git_analyzer import get_commit_by_tag
+import os
+import zlib
 
-
-def load_config(config_path):
-    """Загрузка конфигурации из YAML файла."""
-    if not os.path.exists(config_path):
-        raise FileNotFoundError(f"Конфигурационный файл {config_path} не найден.")
-
-    with open(config_path, 'r', encoding='utf-8') as file:
+def read_config(config_path):
+    """
+    Чтение конфигурационного файла YAML.
+    """
+    with open(config_path, 'r') as file:
         return yaml.safe_load(file)
 
 
-def build_plantuml(graph):
-    """Создание PlantUML графа."""
-    lines = ["@startuml"]
-    for commit, message, parents in graph:
-        lines.append(f'"{commit[:7]}" : "{message}"')
+def read_tag_commit(repo_path, tag_name):
+    """
+    Чтение хэша коммита, соответствующего заданному тегу.
+    """
+    tags_path = os.path.join(repo_path, ".git", "refs", "tags", tag_name)
+    if not os.path.exists(tags_path):
+        raise FileNotFoundError(f"Tag '{tag_name}' not found.")
+    with open(tags_path, 'r') as file:
+        commit_hash = file.read().strip()
+    return commit_hash
+
+
+def read_git_object(repo_path, obj_hash):
+    """
+    Чтение объекта из папки .git/objects по его хэшу.
+    """
+    objects_path = os.path.join(repo_path, ".git", "objects", obj_hash[:2], obj_hash[2:])
+    if not os.path.exists(objects_path):
+        raise FileNotFoundError(f"Object '{obj_hash}' not found.")
+    with open(objects_path, 'rb') as file:
+        compressed_data = file.read()
+    return zlib.decompress(compressed_data).decode('utf-8')
+
+
+def parse_commit(commit_content):
+    """
+    Разбор содержимого объекта коммита.
+    """
+    lines = commit_content.split("\n")
+    parents = [line.split()[1] for line in lines if line.startswith("parent")]
+    message_index = lines.index('') + 1 if '' in lines else len(lines)
+    message = " ".join(lines[message_index:]).strip()
+    return parents, message
+
+
+def build_dependency_graph(repo_path, start_commit):
+    """
+    Построение графа зависимостей для всех коммитов, начиная с указанного.
+    """
+    graph = []
+    visited = set()
+
+    def dfs(commit_hash):
+        if commit_hash in visited:
+            return
+        visited.add(commit_hash)
+        commit_content = read_git_object(repo_path, commit_hash)
+        parents, message = parse_commit(commit_content)
         for parent in parents:
-            lines.append(f'"{parent[:7]}" --> "{commit[:7]}"')
-    lines.append("@enduml")
-    return "\n".join(lines)
+            graph.append((commit_hash, parent, message))
+            dfs(parent)
+
+    dfs(start_commit)
+    return graph
 
 
-def main(config_path):
-    try:
-        config = load_config(config_path)
-    except FileNotFoundError as e:
-        print(e)
-        return
-
-    repo_path = config.get("repository_path")
-    if not os.path.exists(repo_path):
-        print(f"Репозиторий по пути {repo_path} не найден.")
-        return
-
-    start_commit = get_commit_by_tag(repo_path, config["tag_name"])
-    graph = build_dependency_graph(repo_path, start_commit)
-
-    if not graph:
-        print("Граф зависимостей пуст.")
-        return
-
-    plantuml_code = build_plantuml(graph)
-    print("\n--- PlantUML Graph ---\n")
-    print(plantuml_code)
-
-    # Создаем директорию, если она не существует
-    output_dir = './config'
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-
-    # Сохраняем граф в файл
-    output_file = './config/output.puml'
-    try:
-        with open(output_file, "w", encoding="utf-8") as file:
-            file.write(plantuml_code)
-        print(f"Граф зависимостей сохранен в {output_file}")
-    except Exception as e:
-        print(f"Ошибка при сохранении файла {output_file}: {e}")
-
-    # Вызов PlantUML для визуализации
-    try:
-        plantuml_jar_path = 'config/plantuml.jar'  # Путь к вашему jar-файлу
-        if os.path.exists(plantuml_jar_path):
-            subprocess.run(['java', '-jar', plantuml_jar_path, output_file], check=True)
-        else:
-            print("Error: Unable to access jarfile config/plantuml.jar")
-    except subprocess.CalledProcessError as e:
-        print(f"Ошибка при вызове PlantUML: {e}")
+def generate_plantuml(graph, output_file):
+    """
+    Генерация PlantUML кода для графа зависимостей.
+    """
+    with open(output_file, 'w') as file:
+        file.write("@startuml\n")
+        for node, parent, message in graph:
+            file.write(f'"{node}\\n{message}" --> "{parent}"\n')
+        file.write("@enduml\n")
 
 
 if __name__ == "__main__":
-    config_path = '../config/config.yaml'  # Путь к конфигурационному файлу
-    main(config_path)
+    # Шаг 1: Чтение конфигурации
+    config_path = '../config/config.yaml'
+    config = read_config(config_path)
+
+    repo_path = config['repository_path']
+    tag_name = config['tag_name']
+    output_file = config['output_file_path']
+
+    # Шаг 2: Получение стартового коммита
+    start_commit = read_tag_commit(repo_path, tag_name)
+
+    # Шаг 3: Построение графа зависимостей
+    graph = build_dependency_graph(repo_path, start_commit)
+
+    # Шаг 4: Генерация PlantUML
+    generate_plantuml(graph, output_file)
+
+    print(f"Dependency graph generated in '{output_file}'")
