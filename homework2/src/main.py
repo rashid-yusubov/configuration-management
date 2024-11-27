@@ -1,6 +1,5 @@
-import yaml
 import os
-import zlib
+import yaml
 
 
 def read_config(config_path):
@@ -11,64 +10,46 @@ def read_config(config_path):
         with open(config_path, 'r') as file:
             return yaml.safe_load(file)
     except FileNotFoundError:
-        raise FileNotFoundError(f"Config file not found: {config_path}")
-    except PermissionError:
-        raise PermissionError(f"Permission denied: {config_path}")
+        raise FileNotFoundError(f"Configuration file not found: {config_path}")
     except yaml.YAMLError as e:
-        raise ValueError(f"Error parsing YAML file: {e}")
+        raise ValueError(f"Error parsing YAML configuration: {e}")
 
 
-def read_tag_commit(repo_path, tag_name):
+def read_git_object(repo_path, object_hash):
     """
-    Чтение хэша коммита, соответствующего заданному тегу.
+    Чтение объекта Git из папки .git/objects.
     """
-    tags_path = os.path.join(repo_path, ".git", "refs", "tags", tag_name)
-    try:
-        with open(tags_path, 'r') as file:
-            commit_hash = file.read().strip()
-            print(f"Found commit hash for tag {tag_name}: {commit_hash}")
-            return commit_hash
-    except FileNotFoundError:
-        raise FileNotFoundError(f"Tag file not found: {tags_path}")
-    except PermissionError:
-        raise PermissionError(f"Permission denied: {tags_path}")
+    object_path = os.path.join(repo_path, ".git", "objects", object_hash[:2], object_hash[2:])
+    if not os.path.exists(object_path):
+        raise FileNotFoundError(f"Git object not found: {object_path}")
+    print(f"Reading object at: {object_path}")
+    with open(object_path, 'rb') as file:
+        content = file.read()
+    return decompress_object(content)
 
 
-def read_git_object(repo_path, obj_hash):
+def decompress_object(data):
     """
-    Чтение объекта из папки .git/objects по его хэшу.
+    Распаковка объекта Git.
     """
-    objects_path = os.path.join(repo_path, ".git", "objects", obj_hash[:2], obj_hash[2:])
-    print(f"Reading object at: {objects_path}")
-    try:
-        with open(objects_path, 'rb') as file:
-            compressed_data = file.read()
-            data = zlib.decompress(compressed_data).decode('utf-8')
-            print(f"Object {obj_hash} content:\n{data}")
-            return data
-    except FileNotFoundError:
-        raise FileNotFoundError(f"Git object not found: {objects_path}")
-    except PermissionError:
-        raise PermissionError(f"Permission denied: {objects_path}")
-    except zlib.error as e:
-        raise ValueError(f"Error decompressing object {obj_hash}: {e}")
+    import zlib
+    return zlib.decompress(data).decode('utf-8')
 
 
 def parse_commit(commit_content):
     """
-    Разбор содержимого объекта коммита.
+    Разбор содержимого коммита Git.
     """
-    lines = commit_content.split("\n")
-    parents = [line.split()[1] for line in lines if line.startswith("parent")]
-    message_index = lines.index('') + 1 if '' in lines else len(lines)
-    message = " ".join(lines[message_index:]).strip()
-    print(f"Parsed commit: parents={parents}, message='{message}'")
+    lines = commit_content.split('\n')
+    parents = [line.split(' ')[1] for line in lines if line.startswith('parent')]
+    message_index = lines.index('') + 1
+    message = '\n'.join(lines[message_index:]).strip()
     return parents, message
 
 
 def build_dependency_graph(repo_path, start_commit):
     """
-    Построение графа зависимостей для всех коммитов, начиная с указанного.
+    Построение графа зависимостей коммитов.
     """
     graph = []
     visited = set()
@@ -80,56 +61,65 @@ def build_dependency_graph(repo_path, start_commit):
         print(f"Processing commit: {commit_hash}")
         commit_content = read_git_object(repo_path, commit_hash)
         parents, message = parse_commit(commit_content)
+        print(f"Commit {commit_hash} has parents: {parents}, message: '{message}'")
         for parent in parents:
             graph.append((commit_hash, parent, message))
             dfs(parent)
 
     dfs(start_commit)
+    print("Final Graph:", graph)
     return graph
 
 
 def generate_plantuml(graph, output_file):
     """
-    Генерация PlantUML кода для графа зависимостей.
+    Генерация кода PlantUML на основе графа зависимостей.
     """
-    output_dir = os.path.dirname(output_file)
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-
+    print(f"Generating PlantUML file: {output_file}")
     try:
         with open(output_file, 'w') as file:
             file.write("@startuml\n")
-            for node, parent, message in graph:
-                file.write(f'"{node}\\n{message}" --> "{parent}"\n')
+            for child, parent, message in graph:
+                file.write(f'"{child}\\n{message}" --> "{parent}\\n"\n')
             file.write("@enduml\n")
+        print(f"Dependency graph saved in '{output_file}'")
     except FileNotFoundError:
-        raise FileNotFoundError(f"Output file not found: {output_file}")
-    except PermissionError:
-        raise PermissionError(f"Permission denied: {output_file}")
+        print(f"Error: File {output_file} not found.")
     except Exception as e:
-        raise IOError(f"Error writing to file {output_file}: {e}")
+        print(f"Unexpected error: {e}")
+
+
+def find_commit_hash_by_tag(repo_path, tag_name):
+    """
+    Нахождение хэша коммита, связанного с указанным тегом.
+    """
+    refs_path = os.path.join(repo_path, ".git", "refs", "tags", tag_name)
+    if not os.path.exists(refs_path):
+        raise FileNotFoundError(f"Tag '{tag_name}' not found in repository.")
+    with open(refs_path, 'r') as file:
+        commit_hash = file.read().strip()
+    print(f"Found commit hash for tag {tag_name}: {commit_hash}")
+    return commit_hash
 
 
 if __name__ == "__main__":
+    config_path = "../config/config.yaml"  # Путь к конфигурационному файлу
+
     try:
-        # Шаг 1: Чтение конфигурации
-        config_path = "../config/config.yaml"
         config = read_config(config_path)
-
-        repo_path = config['repository_path']
-        tag_name = config['tag_name']
+        visualization_tool_path = config['visualization_tool_path']
+        repository_path = config['repository_path']
         output_file = config['output_file_path']
+        tag_name = config['tag_name']
 
-        # Шаг 2: Получение стартового коммита
-        start_commit = read_tag_commit(repo_path, tag_name)
+        # Нахождение хэша коммита по тегу
+        start_commit = find_commit_hash_by_tag(repository_path, tag_name)
 
-        # Шаг 3: Построение графа зависимостей
-        graph = build_dependency_graph(repo_path, start_commit)
+        # Построение графа зависимостей
+        dependency_graph = build_dependency_graph(repository_path, start_commit)
 
-        # Шаг 4: Генерация PlantUML
-        generate_plantuml(graph, output_file)
-
-        print(f"Dependency graph generated in '{output_file}'")
+        # Генерация файла PlantUML
+        generate_plantuml(dependency_graph, output_file)
 
     except Exception as e:
         print(f"Error: {e}")
