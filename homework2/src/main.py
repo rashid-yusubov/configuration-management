@@ -1,6 +1,17 @@
 import os
 import yaml
-import zlib
+import logging
+
+
+def setup_logging(log_file):
+    """
+    Настройка логирования.
+    """
+    logging.basicConfig(
+        filename=log_file,  # Путь к файлу для записи логов
+        level=logging.DEBUG,  # Уровень логирования (DEBUG - для отладочной информации)
+        format='%(asctime)s - %(levelname)s - %(message)s',
+    )
 
 
 def read_config(config_path):
@@ -11,8 +22,10 @@ def read_config(config_path):
         with open(config_path, 'r') as file:
             return yaml.safe_load(file)
     except FileNotFoundError:
+        logging.error(f"Configuration file not found: {config_path}")
         raise FileNotFoundError(f"Configuration file not found: {config_path}")
     except yaml.YAMLError as e:
+        logging.error(f"Error parsing YAML configuration: {e}")
         raise ValueError(f"Error parsing YAML configuration: {e}")
 
 
@@ -22,8 +35,9 @@ def read_git_object(repo_path, object_hash):
     """
     object_path = os.path.join(repo_path, ".git", "objects", object_hash[:2], object_hash[2:])
     if not os.path.exists(object_path):
+        logging.error(f"Git object not found: {object_path}")
         raise FileNotFoundError(f"Git object not found: {object_path}")
-    print(f"Reading object at: {object_path}")
+    logging.debug(f"Reading object at: {object_path}")
     with open(object_path, 'rb') as file:
         content = file.read()
     return decompress_object(content)
@@ -33,13 +47,8 @@ def decompress_object(data):
     """
     Распаковка объекта Git.
     """
-    try:
-        decompressed_data = zlib.decompress(data).decode('utf-8')
-        return decompressed_data
-    except zlib.error as e:
-        raise ValueError(f"Error decompressing git object: {e}")
-    except UnicodeDecodeError as e:
-        raise ValueError(f"Error decoding git object content as UTF-8: {e}")
+    import zlib
+    return zlib.decompress(data).decode('utf-8')
 
 
 def parse_commit(commit_content):
@@ -64,21 +73,16 @@ def build_dependency_graph(repo_path, start_commit):
         if commit_hash in visited:
             return
         visited.add(commit_hash)
-        print(f"Processing commit: {commit_hash}")
-        try:
-            commit_content = read_git_object(repo_path, commit_hash)
-        except Exception as e:
-            print(f"Error reading commit {commit_hash}: {e}")
-            return
-
+        logging.debug(f"Processing commit: {commit_hash}")
+        commit_content = read_git_object(repo_path, commit_hash)
         parents, message = parse_commit(commit_content)
-        print(f"Commit {commit_hash} has parents: {parents}, message: '{message}'")
+        logging.debug(f"Commit {commit_hash} has parents: {parents}, message: '{message}'")
         for parent in parents:
             graph.append((commit_hash, parent, message))
             dfs(parent)
 
     dfs(start_commit)
-    print("Final Graph:", graph)
+    logging.debug("Final Graph: %s", graph)
     return graph
 
 
@@ -86,19 +90,18 @@ def generate_plantuml(graph, output_file):
     """
     Генерация кода PlantUML на основе графа зависимостей.
     """
-    print(f"Generating PlantUML file: {output_file}")
+    logging.debug(f"Generating PlantUML file: {output_file}")
     try:
-        os.makedirs(os.path.dirname(output_file), exist_ok=True)
         with open(output_file, 'w') as file:
             file.write("@startuml\n")
             for child, parent, message in graph:
                 file.write(f'"{child}\\n{message}" --> "{parent}\\n"\n')
             file.write("@enduml\n")
-        print(f"Dependency graph saved in '{output_file}'")
+        logging.info(f"Dependency graph saved in '{output_file}'")
     except FileNotFoundError:
-        print(f"Error: File {output_file} not found.")
+        logging.error(f"Error: File {output_file} not found.")
     except Exception as e:
-        print(f"Unexpected error: {e}")
+        logging.error(f"Unexpected error: {e}")
 
 
 def find_latest_commit(repo_path):
@@ -107,15 +110,20 @@ def find_latest_commit(repo_path):
     """
     head_path = os.path.join(repo_path, ".git", "refs", "heads", "master")
     if not os.path.exists(head_path):
+        logging.error("Branch 'master' not found.")
         raise FileNotFoundError("Branch 'master' not found.")
     with open(head_path, 'r') as file:
         commit_hash = file.read().strip()
-    print(f"Found latest commit hash: {commit_hash}")
+    logging.debug(f"Found latest commit hash: {commit_hash}")
     return commit_hash
 
 
 if __name__ == "__main__":
     config_path = "../config/config.yaml"  # Путь к конфигурационному файлу
+    log_file = "../config/app.log"  # Путь к файлу логов
+
+    # Настройка логирования
+    setup_logging(log_file)
 
     try:
         config = read_config(config_path)
@@ -133,4 +141,4 @@ if __name__ == "__main__":
         generate_plantuml(dependency_graph, output_file)
 
     except Exception as e:
-        print(f"Error: {e}")
+        logging.error(f"Error: {e}")
