@@ -1,4 +1,4 @@
 visualization_tool_path: "../config/plantuml.jar"
 repository_path: "D:/Users/rashi/GitHub/repository/test_repo"
 output_file_path: "../config/output.puml"
-tag_name: "v1.0.0"
+tag_name: "v1.1.0"
