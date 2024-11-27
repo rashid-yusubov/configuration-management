@@ -1,5 +1,6 @@
 import os
 import yaml
+import zlib
 
 
 def read_config(config_path):
@@ -32,8 +33,13 @@ def decompress_object(data):
     """
     Распаковка объекта Git.
     """
-    import zlib
-    return zlib.decompress(data).decode('utf-8')
+    try:
+        decompressed_data = zlib.decompress(data).decode('utf-8')
+        return decompressed_data
+    except zlib.error as e:
+        raise ValueError(f"Error decompressing git object: {e}")
+    except UnicodeDecodeError as e:
+        raise ValueError(f"Error decoding git object content as UTF-8: {e}")
 
 
 def parse_commit(commit_content):
@@ -59,7 +65,12 @@ def build_dependency_graph(repo_path, start_commit):
             return
         visited.add(commit_hash)
         print(f"Processing commit: {commit_hash}")
-        commit_content = read_git_object(repo_path, commit_hash)
+        try:
+            commit_content = read_git_object(repo_path, commit_hash)
+        except Exception as e:
+            print(f"Error reading commit {commit_hash}: {e}")
+            return
+
         parents, message = parse_commit(commit_content)
         print(f"Commit {commit_hash} has parents: {parents}, message: '{message}'")
         for parent in parents:
@@ -77,6 +88,7 @@ def generate_plantuml(graph, output_file):
     """
     print(f"Generating PlantUML file: {output_file}")
     try:
+        os.makedirs(os.path.dirname(output_file), exist_ok=True)
         with open(output_file, 'w') as file:
             file.write("@startuml\n")
             for child, parent, message in graph:
