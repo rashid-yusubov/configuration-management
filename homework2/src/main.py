@@ -8,8 +8,8 @@ def setup_logging(log_file):
     Настройка логирования.
     """
     logging.basicConfig(
-        filename=log_file,  # Путь к файлу для записи логов
-        level=logging.DEBUG,  # Уровень логирования (DEBUG - для отладочной информации)
+        filename=log_file,
+        level=logging.DEBUG,
         format='%(asctime)s - %(levelname)s - %(message)s',
     )
 
@@ -114,18 +114,32 @@ def generate_plantuml(graph, output_file):
         logging.error(f"Unexpected error: {e}")
 
 
-def find_latest_commit(repo_path):
+def get_commit_hash_by_tag(repo_path, tag_name):
     """
-    Нахождение хэша последнего коммита в ветке master.
+    Получение хэша коммита, связанного с тегом.
     """
-    head_path = os.path.join(repo_path, ".git", "refs", "heads", "master")
-    if not os.path.exists(head_path):
-        logging.error("Branch 'master' not found.")
-        raise FileNotFoundError("Branch 'master' not found.")
-    with open(head_path, 'r') as file:
+    tag_path = os.path.join(repo_path, ".git", "refs", "tags", tag_name)
+    if not os.path.exists(tag_path):
+        logging.error(f"Tag '{tag_name}' not found.")
+        raise FileNotFoundError(f"Tag '{tag_name}' not found.")
+    with open(tag_path, 'r') as file:
         commit_hash = file.read().strip()
-    logging.debug(f"Found latest commit hash: {commit_hash}")
+    logging.debug(f"Found commit hash for tag '{tag_name}': {commit_hash}")
     return commit_hash
+
+
+def resolve_tag_to_commit(repo_path, tag_hash):
+    """
+    Раскрытие аннотированного тега до хэша коммита.
+    """
+    tag_content = read_git_object(repo_path, tag_hash)
+    if tag_content.startswith("object"):
+        # Извлечь хэш коммита из аннотированного тега
+        lines = tag_content.split("\n")
+        for line in lines:
+            if line.startswith("object"):
+                return line.split(" ")[1]
+    return tag_hash
 
 
 if __name__ == "__main__":
@@ -136,13 +150,16 @@ if __name__ == "__main__":
     setup_logging(log_file)
 
     try:
+        # Чтение конфигурации
         config = read_config(config_path)
         visualization_tool_path = config['visualization_tool_path']
         repository_path = config['repository_path']
         output_file = config['output_file_path']
+        tag_name = config['tag_name']
 
-        # Нахождение хэша последнего коммита
-        start_commit = find_latest_commit(repository_path)
+        # Нахождение хэша коммита по тегу
+        commit_hash = get_commit_hash_by_tag(repository_path, tag_name)
+        start_commit = resolve_tag_to_commit(repository_path, commit_hash)
 
         # Построение графа зависимостей
         dependency_graph = build_dependency_graph(repository_path, start_commit)
