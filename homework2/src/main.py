@@ -66,7 +66,7 @@ def build_dependency_graph(repo_path, start_commit):
     """
     Построение графа зависимостей коммитов.
     """
-    graph = []
+    graph = set()  # Используем set для уникальных связей
     visited = set()
 
     def dfs(commit_hash):
@@ -78,12 +78,13 @@ def build_dependency_graph(repo_path, start_commit):
         parents, message = parse_commit(commit_content)
         logging.debug(f"Commit {commit_hash} has parents: {parents}, message: '{message}'")
         for parent in parents:
-            graph.append((commit_hash, parent, message))
+            graph.add((commit_hash, parent, message))  # Set предотвращает дублирование
             dfs(parent)
 
     dfs(start_commit)
     logging.debug("Final Graph: %s", graph)
-    return graph
+    return list(graph)  # Преобразуем в список перед возвратом
+
 
 
 def generate_plantuml(graph, output_file):
