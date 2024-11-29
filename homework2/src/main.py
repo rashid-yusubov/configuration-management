@@ -86,29 +86,31 @@ def build_dependency_graph(repo_path, start_commit):
     return list(graph)  # Преобразуем в список перед возвратом
 
 
-
-def generate_plantuml(graph, output_file):
+def generate_state_diagram(graph, output_file):
     """
-    Генерация кода PlantUML на основе графа зависимостей,
+    Генерация кода диаграммы состояний на основе графа зависимостей,
     вывод на экран и запись в файл.
     """
-    logging.debug("Generating PlantUML code")
-    plantuml_code = "@startuml\n"
+    logging.debug("Generating State Diagram code")
 
-    # Генерация кода для графа
+    # Начало диаграммы состояний
+    state_code = "@startuml\n"
+
+    # Генерация состояний и переходов для графа
     for child, parent, message in graph:
-        plantuml_code += f'"{child}\\n{message}" --> "{parent}\\n"\n'
+        state_code += f"state {child} <<state>> : {message}\n"
+        state_code += f"{parent} --> {child} : {message}\n"
 
-    plantuml_code += "@enduml\n"
+    state_code += "@enduml\n"
 
     # Выводим на экран
-    print(plantuml_code)
+    print(state_code)
 
     # Записываем в файл
     try:
         with open(output_file, 'w') as file:
-            file.write(plantuml_code)
-        logging.debug(f"Dependency graph saved in '{output_file}'")
+            file.write(state_code)
+        logging.debug(f"State diagram saved in '{output_file}'")
     except FileNotFoundError:
         logging.error(f"Error: File {output_file} not found.")
     except Exception as e:
@@ -165,8 +167,10 @@ if __name__ == "__main__":
         # Построение графа зависимостей
         dependency_graph = build_dependency_graph(repository_path, start_commit)
 
-        # Генерация и вывод кода PlantUML на экран и запись в файл
-        generate_plantuml(dependency_graph, output_file)
+        # Генерация диаграммы состояний
+        generate_state_diagram(dependency_graph, output_file)
+
+        print(f"State diagram saved in '{output_file}'")
 
     except Exception as e:
-        logging.error(f"Error: {e}")
+        logging.error(f"Ошибка: {e}")
