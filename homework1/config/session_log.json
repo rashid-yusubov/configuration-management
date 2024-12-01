@@ -658,3 +658,23 @@
     "user": "username",
     "action": "exit"
 }
+{
+    "timestamp": "2024-12-02T01:23:18.645187",
+    "user": "username",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-12-02T01:23:20.556799",
+    "user": "username",
+    "action": "pwd"
+}
+{
+    "timestamp": "2024-12-02T01:23:25.820709",
+    "user": "username",
+    "action": "whoami"
+}
+{
+    "timestamp": "2024-12-02T01:23:28.436790",
+    "user": "username",
+    "action": "exit"
+}
