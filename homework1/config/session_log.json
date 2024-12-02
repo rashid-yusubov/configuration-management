@@ -678,3 +678,13 @@
     "user": "username",
     "action": "exit"
 }
+{
+    "timestamp": "2024-12-02T05:34:26.439897",
+    "user": "username",
+    "action": "ls"
+}
+{
+    "timestamp": "2024-12-02T05:34:29.990641",
+    "user": "username",
+    "action": "exit"
+}
