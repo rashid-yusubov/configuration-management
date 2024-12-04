@@ -54,11 +54,28 @@ class ConfigLanguageConverter:
 
 
 def main():
-    # Считывание YAML с входа
-    print("Введите YAML:")
+    print("Введите YAML, завершите ввод пустой строкой или нажмите Ctrl+D для завершения:")
+
+    # Чтение многострочного ввода
+    yaml_input = []
+    while True:
+        try:
+            line = input()  # Ввод строки
+            if line == "":  # Если строка пустая, завершаем ввод
+                break
+            yaml_input.append(line)
+        except EOFError:
+            break  # Прерывание ввода по Ctrl+D
+
+    if not yaml_input:
+        print("Ошибка: Ввод пуст.")
+        return
+
+    # Преобразование YAML ввода в строку
+    yaml_input_str = "\n".join(yaml_input)
+
     try:
-        yaml_input = input()
-        data = yaml.safe_load(yaml_input)
+        data = yaml.safe_load(yaml_input_str)
     except yaml.YAMLError as e:
         print(f"Ошибка при разборе YAML: {e}")
         return
