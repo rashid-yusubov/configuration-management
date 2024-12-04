@@ -151,6 +151,10 @@ state 9c49a00f40796707fdcb827bdbbe281502e99f0e <<state>> : Third commit
 
 После генерации граф может выглядеть так:
 
+![output](https://github.com/user-attachments/assets/de340679-fe2a-4c92-b258-6151ae5fc720)
+
 ## 5. Результаты прогона тестов:
+
+![image](https://github.com/user-attachments/assets/33e54dc1-4d35-44ed-a27a-c0a6f676d5da)
 
 ---
