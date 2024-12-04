@@ -26,7 +26,7 @@ class ConfigLanguageConverter:
         elif isinstance(data, list):
             return self.convert_list(data, level)
         elif isinstance(data, str):
-            return f'@"{data}"'
+            return self.convert_string(data)
         elif isinstance(data, (int, float)):
             return str(data)
         else:
@@ -51,6 +51,26 @@ class ConfigLanguageConverter:
         values = " ".join(self.to_config_language(value, level + 1) for value in data)
         return f"'( {values} )"
 
+    def convert_string(self, value):
+        """
+        Обрабатывает строки, включая вычисление констант.
+        """
+        if value.startswith('#[') and value.endswith(']'):
+            constant_name = value[2:-1]
+            if constant_name in self.constants:
+                return self.constants[constant_name]
+            else:
+                raise ValueError(f"Неизвестная константа: {constant_name}")
+        return f'@"{value}"'
+
+    def add_constant(self, value, name):
+        """
+        Добавляет константу в таблицу.
+        """
+        if not re.match(r'^[_a-zA-Z][_a-zA-Z0-9]*$', name):
+            raise ValueError(f"Недопустимое имя для константы: {name}")
+        self.constants[name] = self.to_config_language(value)
+
 
 def main():
     """
@@ -69,6 +89,12 @@ def main():
 
     try:
         yaml_data = converter.parse_yaml(input_data)
+
+        # Пример обработки констант, если они указаны в YAML.
+        if 'constants' in yaml_data:
+            for name, value in yaml_data['constants'].items():
+                converter.add_constant(value, name)
+
         output = converter.to_config_language(yaml_data)
         print("Результат преобразования:")
         print(output)
