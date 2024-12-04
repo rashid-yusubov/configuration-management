@@ -1,0 +1,9 @@
+app:
+  name: MyApp
+  version: 1.0
+  features:
+    - "Authentication"
+    - "Database"
+    - "Logging"
+constants:
+  max_users: 100
