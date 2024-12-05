@@ -25,6 +25,6 @@
 
 - Самостоятельная работа №2 - [homework2](https://github.com/Rashid-Yusubov/configuration-management/tree/main/homework2)
   
-- Самостоятельная работа №3 - homework3
+- Самостоятельная работа №3 - [homework3](https://github.com/Rashid-Yusubov/configuration-management/tree/main/homework3)
   
 - Самостоятельная работа №4 - homework4
