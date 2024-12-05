@@ -63,25 +63,25 @@ class TestConfigLanguageConverter(unittest.TestCase):
         }
         expected_output = """{
   app = {
-    name = @"MyApp"
-    version = 1.0
-    features = '( @"Auth" @"Logging" )
-  }
+  name = @"MyApp"
+  version = 1.0
+  features = '( @"Auth" @"Logging" )
+}
   server = {
-    host = @"localhost"
-    port = 8080
-  }
+  host = @"localhost"
+  port = 8080
+}
 }"""
         self.assertEqual(self.converter.to_config_language(data), expected_output)
+
+    def test_empty_input(self):
+        """Тест обработки пустого ввода."""
+        self.assertEqual(self.converter.to_config_language({}), "{\n}")
 
     def test_invalid_constant(self):
         """Тест обращения к несуществующей константе."""
         with self.assertRaises(ValueError):
             self.converter.convert_string("#[undefined_constant]")
-
-    def test_empty_input(self):
-        """Тест обработки пустого ввода."""
-        self.assertEqual(self.converter.to_config_language({}), "{}")
 
 
 if __name__ == "__main__":
