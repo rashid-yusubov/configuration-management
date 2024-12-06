@@ -79,6 +79,12 @@ homework3/
    ```bash
   python src/main.py
    ```
+### Запуск тестирования
+
+   ```bash
+  python tests/test_converter.py
+   ```
+
 ---
 
 ## 4. Примеры использования
