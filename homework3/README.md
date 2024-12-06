@@ -52,3 +52,5 @@ homework3/
 ## 4. Примеры использования
 
 ## 5. Результаты прогона тестов:
+
+![image](https://github.com/user-attachments/assets/f8d3e69b-4572-45d7-bab0-5d0a2a1ea3eb)
