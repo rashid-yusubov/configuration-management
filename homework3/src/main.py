@@ -1,5 +1,6 @@
 import yaml
 import argparse
+import re
 
 
 class ConfigLanguageConverter:
@@ -58,6 +59,15 @@ class ConfigLanguageConverter:
         return f'@"{data}"'
 
 
+def remove_comments(input_data):
+    """Удаляет однострочные и многострочные комментарии."""
+    # Удаление многострочных комментариев
+    input_data = re.sub(r'\(\*.*?\*\)', '', input_data, flags=re.DOTALL)
+    # Удаление однострочных комментариев
+    input_data = re.sub(r'%.*', '', input_data)
+    return input_data
+
+
 def read_input():
     """Считывает данные YAML из пользовательского ввода."""
     print("Введите YAML, завершите ввод пустой строкой или нажмите Ctrl+D для завершения:")
@@ -81,7 +91,6 @@ def parse_args():
 
 
 def main():
-
     # Получение данных
     args = parse_args()
     if args.file:
@@ -97,6 +106,9 @@ def main():
     if not yaml_input_str.strip():
         print("Ошибка: Ввод пуст.")
         return
+
+    # Удаление комментариев
+    yaml_input_str = remove_comments(yaml_input_str)
 
     # Разбор YAML
     try:
@@ -123,7 +135,6 @@ def main():
         print(converter.to_config_language(data))
     except Exception as e:
         print(f"Ошибка: {e}")
-
 
 
 if __name__ == "__main__":
