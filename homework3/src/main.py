@@ -1,6 +1,5 @@
 import yaml
 import argparse
-import re
 
 
 class ConfigLanguageConverter:
@@ -35,6 +34,8 @@ class ConfigLanguageConverter:
             return self._string_to_config_language(self.convert_string(data))
         elif isinstance(data, (int, float)):
             return str(data)
+        elif isinstance(data, bool):  # Исправление для булевых значений
+            return "true" if data else "false"
         elif data is None:
             return "null"
         raise ValueError(f"Недопустимый тип данных: {type(data)}")
@@ -43,6 +44,7 @@ class ConfigLanguageConverter:
         """Конвертирует словарь в формат конфигурационного языка."""
         result = "{\n"
         for key, value in data.items():
+            key = key.replace("-", "_")  # Исправление для дефисов в ключах
             result += f"  {key} = {self.to_config_language(value)}\n"
         result += "}"
         return result
@@ -57,15 +59,6 @@ class ConfigLanguageConverter:
     def _string_to_config_language(self, data):
         """Конвертирует строку в формат конфигурационного языка."""
         return f'@"{data}"'
-
-
-def remove_comments(input_data):
-    """Удаляет однострочные и многострочные комментарии."""
-    # Удаление многострочных комментариев
-    input_data = re.sub(r'\(\*.*?\*\)', '', input_data, flags=re.DOTALL)
-    # Удаление однострочных комментариев
-    input_data = re.sub(r'%.*', '', input_data)
-    return input_data
 
 
 def read_input():
@@ -106,9 +99,6 @@ def main():
     if not yaml_input_str.strip():
         print("Ошибка: Ввод пуст.")
         return
-
-    # Удаление комментариев
-    yaml_input_str = remove_comments(yaml_input_str)
 
     # Разбор YAML
     try:
