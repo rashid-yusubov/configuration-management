@@ -1,4 +1,5 @@
 import yaml
+import argparse
 
 
 class ConfigLanguageConverter:
@@ -9,6 +10,8 @@ class ConfigLanguageConverter:
         """Добавление константы."""
         if not name.isidentifier():
             raise ValueError(f"Неверное имя константы: {name}")
+        if not isinstance(value, (int, float, str, list, dict)):
+            raise ValueError(f"Неверный тип значения константы: {type(value)}")
         self.constants[name] = value
 
     def convert_string(self, expr):
@@ -28,10 +31,12 @@ class ConfigLanguageConverter:
         elif isinstance(data, list):
             return self._list_to_config_language(data)
         elif isinstance(data, str):
-            return self._string_to_config_language(data)
+            return self._string_to_config_language(self.convert_string(data))
         elif isinstance(data, (int, float)):
             return str(data)
-        return str(data)
+        elif data is None:
+            return "null"
+        raise ValueError(f"Недопустимый тип данных: {type(data)}")
 
     def _dict_to_config_language(self, data):
         """Конвертирует словарь в формат конфигурационного языка."""
@@ -53,27 +58,47 @@ class ConfigLanguageConverter:
         return f'@"{data}"'
 
 
-def main():
+def read_input():
+    """Считывает данные YAML из пользовательского ввода."""
     print("Введите YAML, завершите ввод пустой строкой или нажмите Ctrl+D для завершения:")
-
-    # Чтение многострочного ввода
     yaml_input = []
     while True:
         try:
-            line = input()  # Ввод строки
-            if line == "":  # Если строка пустая, завершаем ввод
+            line = input()
+            if not line.strip():
                 break
             yaml_input.append(line)
         except EOFError:
-            break  # Прерывание ввода по Ctrl+D
+            break
+    return "\n".join(yaml_input)
 
-    if not yaml_input:
+
+def parse_args():
+    """Парсинг аргументов командной строки."""
+    parser = argparse.ArgumentParser(description="Преобразование YAML в учебный конфигурационный язык.")
+    parser.add_argument("-f", "--file", help="Путь к YAML-файлу", type=str)
+    return parser.parse_args()
+
+
+def main():
+
+    # Получение данных
+    args = parse_args()
+    if args.file:
+        try:
+            with open(args.file, "r") as file:
+                yaml_input_str = file.read()
+        except FileNotFoundError:
+            print(f"Ошибка: файл {args.file} не найден.")
+            return
+    else:
+        yaml_input_str = read_input()
+
+    if not yaml_input_str.strip():
         print("Ошибка: Ввод пуст.")
         return
 
-    # Преобразование YAML ввода в строку
-    yaml_input_str = "\n".join(yaml_input)
-
+    # Разбор YAML
     try:
         data = yaml.safe_load(yaml_input_str)
     except yaml.YAMLError as e:
@@ -86,7 +111,11 @@ def main():
     # Пример добавления констант
     if "constants" in data:
         for name, value in data["constants"].items():
-            converter.add_constant(value, name)
+            try:
+                converter.add_constant(value, name)
+            except ValueError as e:
+                print(f"Ошибка добавления константы: {e}")
+                return
 
     # Преобразование и вывод
     try:
@@ -94,6 +123,7 @@ def main():
         print(converter.to_config_language(data))
     except Exception as e:
         print(f"Ошибка: {e}")
+
 
 
 if __name__ == "__main__":
