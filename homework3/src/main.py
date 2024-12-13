@@ -19,7 +19,7 @@ class ConfigLanguageConverter:
         if expr.startswith("#[") and expr.endswith("]"):
             constant_name = expr[2:-1]
             if constant_name in self.constants:
-                return str(self.constants[constant_name])
+                return self.constants[constant_name]
             else:
                 raise ValueError(f"Константа {constant_name} не найдена")
         return expr
